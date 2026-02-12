@@ -18,13 +18,9 @@
 import random
 import simplegui
 
-
 # helper functions
 
 def name_to_number(name):
-    
-    # convert name to number using if/elif/else
-    # don't forget to return the result!
 
     if name == "rock":
         return 0
