@@ -29,6 +29,9 @@ MOVE_TO_NUMBER: Dict[str, int] = {
     "scissors": 4
 }
 
+# Add reverse mapping constant
+NUMBER_TO_MOVE: Dict[int, str] = {v: k for k, v in MOVE_TO_NUMBER.items()}
+
 # Game constants
 VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])
 WINNING_DIFFS = {1, 2}
@@ -131,10 +134,10 @@ def number_to_name(number: int) -> str:
     if not isinstance(number, int):
         raise ValueError("Input must be an integer")
         
-    if number < 0 or number > 4:
+    try:
+        return NUMBER_TO_MOVE[number]
+    except KeyError:
         raise ValueError(f"Invalid number {number}. Must be between 0 and 4")
-        
-    return list(MOVE_TO_NUMBER.keys())[number]
 
     
 #----------------------------------------------------------    
