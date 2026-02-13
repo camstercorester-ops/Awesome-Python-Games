@@ -157,7 +157,6 @@ def number_to_name(number: int) -> str:
 # Main game function
 #----------------------------------------------------------    
 
-
 def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
     """
     Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.
@@ -195,17 +194,16 @@ def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
         player_number = name_to_number(player_choice)
         comp_number = random.randrange(5)
         comp_choice = number_to_name(comp_number)
-        diff = (comp_number - player_number) % 5
-        result = _determine_winner(diff)
-        
+        result = _determine_winner((comp_number - player_number) % 5)
+
         # UI output
         print("------------")
         print("Player chooses", player_choice)
         print("Computer chooses", comp_choice)
         print(result)
-        
-        return (player_choice, comp_choice, result)
-        
+
+        return player_choice, comp_choice, result
+
     except ValueError as e:
         print(f"Error: {e}")
         return None
