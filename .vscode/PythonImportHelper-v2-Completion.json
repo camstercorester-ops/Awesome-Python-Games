@@ -36,6 +36,14 @@
         "documentation": {}
     },
     {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "unittest",
         "kind": 6,
         "isExtraImport": true,
@@ -1515,7 +1523,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def name_to_number(name):\n    \"\"\"\n    Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.\n    The conversion follows the standard mapping:\n    - rock -> 0\n    - Spock -> 1\n    - paper -> 2\n    - lizard -> 3\n    - scissors -> 4\n    Args:",
+        "peekOfCode": "def name_to_number(name: str) -> int:\n    \"\"\"\n    Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.\n    The conversion follows the standard mapping:\n    - rock -> 0\n    - Spock -> 1\n    - paper -> 2\n    - lizard -> 3\n    - scissors -> 4\n    Args:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },

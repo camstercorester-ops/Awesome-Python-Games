@@ -18,10 +18,20 @@
 
 import random
 import tkinter as tk
+from typing import Dict
+
+# Module-level constant for conversion
+MOVE_TO_NUMBER: Dict[str, int] = {
+    "rock": 0,
+    "spock": 1,
+    "paper": 2,
+    "lizard": 3,
+    "scissors": 4
+}
 
 # helper functions
 
-def name_to_number(name):
+def name_to_number(name: str) -> int:
     """
     Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.
     
@@ -33,13 +43,13 @@ def name_to_number(name):
     - scissors -> 4
     
     Args:
-        name (str): The name of the move to convert (case-sensitive).
+        name (str): The name of the move to convert (case-insensitive).
         
     Returns:
         int: The number corresponding to the input name (0-4).
         
-    Side Effects:
-        Prints an error message if the input name is not valid.
+    Raises:
+        ValueError: If input is not a string or not a valid move name.
         
     Examples:
         >>> name_to_number("rock")
@@ -47,22 +57,22 @@ def name_to_number(name):
         >>> name_to_number("Spock")
         1
     """
-    
     if not isinstance(name, str):
         raise ValueError("Input must be a string")
-        
-    conversion = {
-        "rock": 0,
-        "Spock": 1,
-        "paper": 2,
-        "lizard": 3,
-        "scissors": 4
-    }
     
-    if name not in conversion:
-        raise ValueError(f"'{name}' is not a valid move. Valid moves are: {', '.join(conversion.keys())}")
+    # Convert to lowercase for case-insensitive comparison
+    name_lower = name.lower()
     
-    return conversion[name]
+    # Use dictionary.get() with default None for invalid moves
+    result = MOVE_TO_NUMBER.get(name_lower)
+    
+    if result is None:
+        raise ValueError(
+            f"'{name}' is not a valid move. "
+            f"Valid moves are: {', '.join(MOVE_TO_NUMBER.keys())}"
+        )
+    
+    return result
 
 #----------------------------------------------------------
 # Number to name conversion function
