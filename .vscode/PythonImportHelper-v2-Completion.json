@@ -1556,7 +1556,7 @@
         "kind": 6,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "class Move(IntEnum):\n    \"\"\"Strongly-typed moves with built-in conversion.\"\"\"\n    ROCK = 0\n    SPOCK = 1\n    PAPER = 2\n    LIZARD = 3\n    SCISSORS = 4\n    @classmethod\n    def from_str(cls, name: str) -> \"Move\":\n        \"\"\"Case-insensitive conversion from string.\"\"\"",
+        "peekOfCode": "class Move(IntEnum):\n    \"\"\"Strongly-typed moves with built-in conversion.\"\"\"\n    ROCK = 0\n    SPOCK = 1\n    PAPER = 2\n    LIZARD = 3\n    SCISSORS = 4\n    _NAME_TO_MOVE: Final[dict[str, \"Move\"]] = {name: move for name, move in ((m.name.upper(), m) for m in Move)}\n    _RESULT_CACHE: Final[Tuple[Tuple[int, ...], ...]] = tuple(\n        tuple(1 if (m - o) % 5 in {1, 2} else (-1 if (m - o) % 5 in {3, 4} else 0) for o in range(5))",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1565,7 +1565,7 @@
         "kind": 6,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "class RPSLSGui:\n    \"\"\"Enhanced GUI with scoreboard, history, quick buttons, and status bar.\"\"\"\n    def __init__(self) -> None:\n        try:\n            self.root = tk.Tk()\n            self.root.title(\"Rock-Paper-Scissors-Lizard-Spock\")\n            self.root.geometry(\"420x420\")\n            self.root.resizable(False, False)\n            self.root.eval(\"tk::PlaceWindow . center\")\n            # Persistent stats",
+        "peekOfCode": "class RPSLSGui:\n    \"\"\"Enhanced GUI with scoreboard, history, quick buttons, and status bar.\"\"\"\n    def __init__(self) -> None:\n        self.root = tk.Tk()\n        self.root.title(\"Rock-Paper-Scissors-Lizard-Spock\")\n        self.root.geometry(\"420x420\")\n        self.root.resizable(False, False)\n        self.root.eval(\"tk::PlaceWindow . center\")\n        # Persistent stats\n        self.stats = {\"wins\": 0, \"losses\": 0, \"ties\": 0}",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1574,7 +1574,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def play(player_move: Move) -> Tuple[Move, Move, str]:\n    \"\"\"Run one round and return (player, computer, result_text).\"\"\"\n    computer_move = Move(random.randrange(5))\n    outcome = player_move.beats(computer_move)\n    return player_move, computer_move, _RESULT_MAP[outcome]\n# ------------------------------------------------------------------\n# CLI helper\n# ------------------------------------------------------------------\ndef rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:\n    \"\"\"CLI-friendly wrapper; prints result and returns data or None on error.\"\"\"",
+        "peekOfCode": "def play(player_move: Move) -> Tuple[Move, Move, str]:\n    \"\"\"Run one round and return (player, computer, result_text).\"\"\"\n    computer_move = Move(random.randrange(5))\n    outcome = player_move.beats(computer_move)\n    return player_move, computer_move, _RESULT_MAP[outcome + 1]\n# ------------------------------------------------------------------\n# CLI helper\n# ------------------------------------------------------------------\ndef rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:\n    \"\"\"CLI-friendly wrapper; prints result and returns data or None on error.\"\"\"",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },

@@ -22,13 +22,19 @@ class Move(IntEnum):
     LIZARD = 3
     SCISSORS = 4
 
+    _NAME_TO_MOVE: Final[dict[str, "Move"]] = {name: move for name, move in ((m.name.upper(), m) for m in Move)}
+    _RESULT_CACHE: Final[Tuple[Tuple[int, ...], ...]] = tuple(
+        tuple(1 if (m - o) % 5 in {1, 2} else (-1 if (m - o) % 5 in {3, 4} else 0) for o in range(5))
+        for m in range(5)
+    )
+
     @classmethod
     def from_str(cls, name: str) -> "Move":
         """Case-insensitive conversion from string."""
-        try:
-            return cls[name.upper()]
-        except KeyError:
-            raise ValueError(f"Invalid move: {name!r}") from None
+        move = cls._NAME_TO_MOVE.get(name.upper())
+        if move is None:
+            raise ValueError(f"Invalid move: {name!r}")
+        return move
 
     def beats(self, other: "Move") -> int:
         """
@@ -37,29 +43,23 @@ class Move(IntEnum):
             0  if tie
             -1 if self loses
         """
-        diff = (self - other) % 5
-        if diff == 0:
-            return 0
-        return 1 if diff in {1, 2} else -1
+        return Move._RESULT_CACHE[self][other]
 
 # ------------------------------------------------------------------
 # Game engine
 # ------------------------------------------------------------------
 
-
 _RESULT_MAP: Final[Tuple[str, str, str]] = ("Tie!", "Player wins!", "Computer wins!")
-
 
 def play(player_move: Move) -> Tuple[Move, Move, str]:
     """Run one round and return (player, computer, result_text)."""
     computer_move = Move(random.randrange(5))
     outcome = player_move.beats(computer_move)
-    return player_move, computer_move, _RESULT_MAP[outcome]
+    return player_move, computer_move, _RESULT_MAP[outcome + 1]
 
 # ------------------------------------------------------------------
 # CLI helper
 # ------------------------------------------------------------------
-
 
 def rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:
     """CLI-friendly wrapper; prints result and returns data or None on error."""
@@ -80,89 +80,87 @@ def rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:
 # GUI
 # ------------------------------------------------------------------
 
-
 class RPSLSGui:
     """Enhanced GUI with scoreboard, history, quick buttons, and status bar."""
 
     def __init__(self) -> None:
-        try:
-            self.root = tk.Tk()
-            self.root.title("Rock-Paper-Scissors-Lizard-Spock")
-            self.root.geometry("420x420")
-            self.root.resizable(False, False)
-            self.root.eval("tk::PlaceWindow . center")
+        self.root = tk.Tk()
+        self.root.title("Rock-Paper-Scissors-Lizard-Spock")
+        self.root.geometry("420x420")
+        self.root.resizable(False, False)
+        self.root.eval("tk::PlaceWindow . center")
 
-            # Persistent stats
-            self.stats = {"wins": 0, "losses": 0, "ties": 0}
-            self.history: list[Tuple[str, str, str]] = []
+        # Persistent stats
+        self.stats = {"wins": 0, "losses": 0, "ties": 0}
+        self.history: list[Tuple[str, str, str]] = []
 
-            # --- Header ---
-            header = tk.Frame(self.root)
-            header.pack(pady=6)
-            tk.Label(header, text="Rock-Paper-Scissors-Lizard-Spock",
-                     font=("Arial", 14, "bold")).pack()
+        # --- Header ---
+        header = tk.Frame(self.root)
+        header.pack(pady=6)
+        tk.Label(header, text="Rock-Paper-Scissors-Lizard-Spock",
+                 font=("Arial", 14, "bold")).pack()
 
-            # --- Scoreboard ---
-            score_frame = tk.Frame(self.root, relief="groove", bd=2)
-            score_frame.pack(pady=6)
-            self.score_lbl = tk.Label(score_frame, text=self._score_text(),bg="lightgray", font=("Arial", 10))
-            self.score_lbl.pack(padx=10, pady=4)
-            
-            # --- Close button ---
-            tk.Button(self.root, text="Close", command=self.root.destroy,
-                      width=10, default="active", bg="lightgray").pack(pady=6)
+        # --- Scoreboard ---
+        score_frame = tk.Frame(self.root, relief="groove", bd=2)
+        score_frame.pack(pady=6)
+        self.score_lbl = tk.Label(score_frame, text=self._score_text(),
+                                    bg="lightgray", font=("Arial", 10))
+        self.score_lbl.pack(padx=10, pady=4)
 
-            # --- Input area ---
-            input_frame = tk.Frame(self.root, bg="lightgray")
-            input_frame.pack(pady=6)
-            tk.Label(input_frame, text="Enter your move:", bg="lightgray").pack(side="left")
-            self.entry = tk.Entry(input_frame, width=20, justify="center")
-            self.entry.pack(side="left")
-            self.entry.focus()
-            self.entry.bind("<Return>", self._on_submit)
+        # --- Close button ---
+        tk.Button(self.root, text="Close", command=self.root.destroy,
+                  width=10, default="active", bg="lightgray").pack(pady=6)
 
-            # --- Quick pick buttons ---
-            btn_frame = tk.Frame(self.root, bg="lightgray")
-            btn_frame.pack(pady=6)
-            for move in Move:
-                tk.Button(btn_frame, text=move.name.lower(), command=lambda m=move: self._quick_move(m), width=8, bg="lightgray").pack(side="left", padx=2)
+        # --- Input area ---
+        input_frame = tk.Frame(self.root, bg="lightgray")
+        input_frame.pack(pady=6)
+        tk.Label(input_frame, text="Enter your move:", bg="lightgray").pack(side="left")
+        self.entry = tk.Entry(input_frame, width=20, justify="center")
+        self.entry.pack(side="left")
+        self.entry.focus()
+        self.entry.bind("<Return>", self._on_submit)
 
-            # --- Submit / Clear / History toggle ---
-            ctrl_frame = tk.Frame(self.root, bg="lightgray")
-            ctrl_frame.pack(pady=6)
-            tk.Button(ctrl_frame, text="Submit", command=self._on_submit,
-                      width=10, default="active", bg="lightgray").pack(side="left", padx=4)
-            tk.Button(ctrl_frame, text="Clear", command=self._clear_entry,
-                      width=8, bg="lightgray").pack(side="left", padx=4)
-            self.history_btn = tk.Button(ctrl_frame, text="Show History",
-                                         command=self._toggle_history, width=12, bg="lightgray")
-            self.history_btn.pack(side="left", padx=4)
+        # --- Quick pick buttons ---
+        btn_frame = tk.Frame(self.root, bg="lightgray")
+        btn_frame.pack(pady=6)
+        for move in Move:
+            tk.Button(btn_frame, text=move.name.lower(),
+                      command=lambda m=move: self._quick_move(m),
+                      width=8, bg="lightgray").pack(side="left", padx=2)
 
-            # --- Result display ---
-            result_frame = tk.Frame(self.root, bg="lightgray")
-            result_frame.pack(pady=6)
-            self.result_lbl = tk.Label(result_frame, text="",
-                                       font=("Arial", 11, "italic"), fg="blue")
-            self.result_lbl.pack(pady=6)
+        # --- Submit / Clear / History toggle ---
+        ctrl_frame = tk.Frame(self.root, bg="lightgray")
+        ctrl_frame.pack(pady=6)
+        tk.Button(ctrl_frame, text="Submit", command=self._on_submit,
+                  width=10, default="active", bg="lightgray").pack(side="left", padx=4)
+        tk.Button(ctrl_frame, text="Clear", command=self._clear_entry,
+                  width=8, bg="lightgray").pack(side="left", padx=4)
+        self.history_btn = tk.Button(ctrl_frame, text="Show History",
+                                     command=self._toggle_history, width=12, bg="lightgray")
+        self.history_btn.pack(side="left", padx=4)
 
-            # --- History list (hidden by default) ---
-            self.history_shown = False
-            self.history_frame = tk.Frame(self.root, bg="lightgray")
-            self.history_listbox = tk.Listbox(self.history_frame, height=6, width=50, bg="lightgray")
-            scrollbar = tk.Scrollbar(self.history_frame, orient="vertical")
-            scrollbar.config(command=self.history_listbox.yview)
-            self.history_listbox.config(yscrollcommand=scrollbar.set)
-            self.history_listbox.pack(side="left", fill="y")
-            scrollbar.pack(side="right", fill="y")
+        # --- Result display ---
+        result_frame = tk.Frame(self.root, bg="lightgray")
+        result_frame.pack(pady=6)
+        self.result_lbl = tk.Label(result_frame, text="",
+                                   font=("Arial", 11, "italic"), fg="blue")
+        self.result_lbl.pack(pady=6)
 
-            # --- Status bar ---
-            self.status = tk.Label(self.root, text="Ready", bd=1, relief="sunken",
-                                   anchor="w", font=("Arial", 8), bg="lightgray"   )
-            self.status.pack(side="bottom", fill="x")
+        # --- History list (hidden by default) ---
+        self.history_shown = False
+        self.history_frame = tk.Frame(self.root, bg="lightgray")
+        self.history_listbox = tk.Listbox(self.history_frame, height=6,
+                                            width=50, bg="lightgray")
+        scrollbar = tk.Scrollbar(self.history_frame, orient="vertical")
+        scrollbar.config(command=self.history_listbox.yview)
+        self.history_listbox.config(yscrollcommand=scrollbar.set)
+        self.history_listbox.pack(side="left", fill="y")
+        scrollbar.pack(side="right", fill="y")
 
-        except Exception as e:
-            print(f"Error initializing GUI: {e}")
-            raise
+        # --- Status bar ---
+        self.status = tk.Label(self.root, text="Ready", bd=1, relief="sunken",
+                               anchor="w", font=("Arial", 8), bg="lightgray")
+        self.status.pack(side="bottom", fill="x")
 
     # ----------------------------------------------------------
     # Helpers
@@ -221,9 +219,9 @@ class RPSLSGui:
 
     def _record_result(self, player: Move, computer: Move, result: str) -> None:
         """Update stats and history."""
-        if "win" in result.lower():
+        if result[0] == "P":
             self.stats["wins"] += 1
-        elif "lose" in result.lower():
+        elif result[0] == "C":
             self.stats["losses"] += 1
         else:
             self.stats["ties"] += 1
@@ -242,7 +240,6 @@ class RPSLSGui:
 # ------------------------------------------------------------------
 # Entry point
 # ------------------------------------------------------------------
-
 
 if __name__ == "__main__":
     try:
