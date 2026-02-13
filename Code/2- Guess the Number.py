@@ -111,8 +111,3 @@ new_game()
 # Start the GUI event loop
 frame.start()
 #------------------------------------------
-
-
-
-
-# always remember to check your completed program against the grading rubric
