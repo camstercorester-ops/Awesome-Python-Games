@@ -65,7 +65,6 @@ def name_to_number(name):
     else:
         print("Error: Not a valid name")
         return None
- 
 
 #----------------------------------------------------------
 # Number to name conversion function
@@ -107,7 +106,8 @@ def number_to_name(number):
     elif number == 4:
         return "scissors" 
     else:
-        print "Error: Not a valid number" 
+        print("Error: Not a valid number")
+
     
 #----------------------------------------------------------    
 # Main game function
