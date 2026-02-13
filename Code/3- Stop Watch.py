@@ -227,8 +227,15 @@ def timer_start() -> None:
     global _timer_id
     if _timer_id is not None:
         return
+    _timer_id = root.after(100, timer_tick)
+
+
+def timer_tick() -> None:
+    """Callback that increments time and schedules the next tick."""
     increment_elapsed()
-    _timer_id = root.after(100, timer_start)
+    global _timer_id
+    if _timer_id is not None:  # Only reschedule if not stopped
+        _timer_id = root.after(100, timer_tick)
 
 
 def timer_stop() -> None:
