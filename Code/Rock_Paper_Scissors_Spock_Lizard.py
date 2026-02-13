@@ -189,21 +189,10 @@ def get_input(inp: str) -> Optional[bool]:
         
     Returns:
         Optional[bool]: True if input was valid and processed, False otherwise.
-        
-    Raises:
-        ValueError: If input is not a string.
     """
     try:
-        if not isinstance(inp, str):
-            raise ValueError("Input must be a string")
-            
-        if _validate_input(inp):
-            rpsls(inp.lower())
-            return True
-        else:
-            print(f"Error: Invalid Input. Valid moves are: {', '.join(VALID_MOVES)}")
-            return False
-            
+        rpsls(inp)
+        return True
     except ValueError as e:
         print(f"Error: {e}")
         return False

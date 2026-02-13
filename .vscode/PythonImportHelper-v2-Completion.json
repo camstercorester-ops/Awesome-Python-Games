@@ -1566,7 +1566,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def get_input(inp: str) -> Optional[bool]:\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        Optional[bool]: True if input was valid and processed, False otherwise.\n    Raises:\n        ValueError: If input is not a string.\n    \"\"\"",
+        "peekOfCode": "def get_input(inp: str) -> Optional[bool]:\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        Optional[bool]: True if input was valid and processed, False otherwise.\n    \"\"\"\n    try:\n        rpsls(inp)",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
