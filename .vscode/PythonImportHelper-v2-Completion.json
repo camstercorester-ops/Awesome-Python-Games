@@ -76,28 +76,11 @@
         "documentation": {}
     },
     {
-        "label": "unittest",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "unittest",
-        "description": "unittest",
-        "detail": "unittest",
-        "documentation": {}
-    },
-    {
-        "label": "name_to_number",
-        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "isExtraImport": true,
-        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "documentation": {}
-    },
-    {
         "label": "new_game",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def new_game():\n    print \"----------------------------------------\"\n    print \"----------------------------------------\"\n    print \"New game. Range is from 0 to\", num_range\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(0, num_range)\n    remaining_guesses = int( math.ceil(math.log(num_range, 2)) )\n    print \"Total Guesses:\", remaining_guesses\n#------------------------------------------\n# define event handlers for control panel",
+        "peekOfCode": "def new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(num_range)\n    remaining_guesses = (num_range - 1).bit_length()\n    print(\"\\n\".join([",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -142,7 +125,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "secret_number = 0\nnum_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    print \"----------------------------------------\"\n    print \"----------------------------------------\"\n    print \"New game. Range is from 0 to\", num_range\n    global secret_number, remaining_guesses",
+        "peekOfCode": "secret_number = 0\nnum_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -151,7 +134,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "num_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    print \"----------------------------------------\"\n    print \"----------------------------------------\"\n    print \"New game. Range is from 0 to\", num_range\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(0, num_range)",
+        "peekOfCode": "num_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -160,7 +143,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "remaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    print \"----------------------------------------\"\n    print \"----------------------------------------\"\n    print \"New game. Range is from 0 to\", num_range\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(0, num_range)\n    remaining_guesses = int( math.ceil(math.log(num_range, 2)) )",
+        "peekOfCode": "remaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -1584,15 +1567,6 @@
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "peekOfCode": "def rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:\n    \"\"\"CLI-friendly wrapper; prints result and returns data or None on error.\"\"\"\n    try:\n        player = Move.from_str(player_choice)\n    except ValueError as e:\n        print(f\"Error: {e}\")\n        return None\n    player_move, computer_move, result = play(player)\n    print(\"-\" * 20)\n    print(f\"Player chooses   : {player_move.name.lower()}\")",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "documentation": {}
-    },
-    {
-        "label": "TestNameToNumber",
-        "kind": 6,
-        "importPath": "Code.TestNameToNumber",
-        "description": "Code.TestNameToNumber",
-        "peekOfCode": "class TestNameToNumber(unittest.TestCase):\n    def test_valid_moves(self):\n        # Test all valid moves\n        self.assertEqual(name_to_number(\"rock\"), 0)\n        self.assertEqual(name_to_number(\"Spock\"), 1)\n        self.assertEqual(name_to_number(\"paper\"), 2)\n        self.assertEqual(name_to_number(\"lizard\"), 3)\n        self.assertEqual(name_to_number(\"scissors\"), 4)\n    def test_invalid_move(self):\n        # Test invalid move",
-        "detail": "Code.TestNameToNumber",
         "documentation": {}
     }
 ]

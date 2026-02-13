@@ -17,19 +17,22 @@ remaining_guesses = 0
 # helper function to start and restart the game
 
 def new_game():
-    print "----------------------------------------"
-    print "----------------------------------------"
-    
-    print "New game. Range is from 0 to", num_range
-    
+    """
+    Start a new game: pick a secret number in [0, num_range) and
+    set remaining_guesses to the optimal number of attempts
+    (ceiling of log2(num_range)).
+    """
     global secret_number, remaining_guesses
     
-    secret_number = random.randrange(0, num_range)
-
-    remaining_guesses = int( math.ceil(math.log(num_range, 2)) )
+    secret_number = random.randrange(num_range)
+    remaining_guesses = (num_range - 1).bit_length()
     
-    print "Total Guesses:", remaining_guesses
-    
+    print("\n".join([
+        "-" * 40,
+        "-" * 40,
+        f"New game. Range is from 0 to {num_range}",
+        f"Total Guesses: {remaining_guesses}"
+    ]))
     
 #------------------------------------------
 # define event handlers for control panel
