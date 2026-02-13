@@ -1,4 +1,7 @@
 # Rock-paper-scissors-lizard-Spock template
+# A Python implementation of the classic Rock-Paper-Scissors-Lizard-Spock game
+# This variant was popularized by The Big Bang Theory and adds two extra moves
+# to the traditional Rock-Paper-Scissors game for more complex gameplay.
 
 # The key idea of this program is to equate the strings
 # "rock", "paper", "scissors", "lizard", "Spock" to numbers
@@ -9,6 +12,9 @@
 # 2 - paper
 # 3 - lizard
 # 4 - scissors
+#
+# This numerical representation allows for mathematical determination
+# of the winner using modular arithmetic.
 
 #----------------------------------------------------------
 # Helper functions section
@@ -20,6 +26,7 @@ import tkinter as tk
 from typing import Dict, Optional, Tuple
 
 # Module-level constant for conversion
+# Maps string move names to their corresponding numerical values
 MOVE_TO_NUMBER: Dict[str, int] = {
     "rock": 0,
     "spock": 1,
@@ -29,29 +36,66 @@ MOVE_TO_NUMBER: Dict[str, int] = {
 }
 
 # Add reverse mapping constant
+# Maps numerical values back to their string move names for display purposes
 NUMBER_TO_MOVE: Dict[int, str] = {v: k for k, v in MOVE_TO_NUMBER.items()}
 
 # Game constants
+# Frozen set of all valid move names for efficient membership testing
 VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])
+# Set of differences that result in computer winning (see rpsls function for details)
 WINNING_DIFFS = {1, 2}
+# Difference value that indicates a tie game
 TIE_DIFF = 0
 
 # helper functions
 
+
 def _validate_choice(choice: str) -> None:
-    """Validate player's choice."""
+    """
+    Validate that the player's choice is a valid move.
+    
+    This internal helper function ensures the input is a string and
+    corresponds to one of the five valid game moves.
+    
+    Args:
+        choice (str): The player's move selection to validate
+        
+    Raises:
+        ValueError: If choice is not a string or not a valid move name
+        
+    Note:
+        This function performs case-insensitive validation
+    """
     if not isinstance(choice, str):
         raise ValueError("Choice must be a string")
     if choice.lower() not in VALID_MOVES:
         raise ValueError(f"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}")
 
+
 def _determine_winner(diff: int) -> str:
-    """Determine the winner based on the difference."""
+    """
+    Determine the game outcome based on the modular difference.
+    
+    Uses the mathematical difference between player and computer moves
+    to determine who wins according to the game rules.
+    
+    Args:
+        diff (int): The modular difference (comp_number - player_number) % 5
+        
+    Returns:
+        str: A string indicating whether the computer wins, player wins, or it's a tie
+        
+    Algorithm:
+        - diff in {1, 2}: Computer wins (computer's move beats player's move)
+        - diff == 0: Tie game (same moves selected)
+        - Otherwise: Player wins (player's move beats computer's move)
+    """
     if diff in WINNING_DIFFS:
         return "Computer Wins"
     if diff == TIE_DIFF:
         return "Player and computer tie!"
     return "Player Wins"
+
 
 def name_to_number(name: str) -> int:
     """
@@ -99,10 +143,14 @@ def name_to_number(name: str) -> int:
 #----------------------------------------------------------
 # Number to name conversion function
 #----------------------------------------------------------
+
         
 def number_to_name(number: int) -> str:
     """
     Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.
+    
+    This is the inverse operation of name_to_number(), allowing conversion
+    from the internal numerical representation back to human-readable move names.
     
     Args:
         number (int): A numeric value between 0 and 4 representing:
@@ -131,15 +179,30 @@ def number_to_name(number: int) -> str:
         return NUMBER_TO_MOVE[number]
     except KeyError:
         raise ValueError(f"Invalid number {number}. Must be between 0 and 4")
-
     
 #----------------------------------------------------------    
 # Main game function
 #----------------------------------------------------------    
 
+
 def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
     """
     Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.
+    
+    Implements the complete game logic including:
+    - Input validation
+    - Random computer move generation
+    - Winner determination using modular arithmetic
+    - Console output of game results
+    
+    Game Rules (using modular arithmetic):
+    The winner is determined by (computer_number - player_number) % 5:
+    - If result is 1 or 2: Computer wins
+    - If result is 3 or 4: Player wins
+    - If result is 0: Tie game
+    
+    This mathematical approach encodes all the complex winning relationships
+    between the five different moves.
     
     Args:
         player_choice (str): The player's choice from VALID_MOVES
@@ -150,6 +213,9 @@ def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
         
     Raises:
         ValueError: If player_choice is not one of the valid options
+        
+    Console Output:
+        Prints a formatted game summary including both choices and the result
     """
     try:
         _validate_choice(player_choice)
@@ -176,18 +242,24 @@ def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
 #----------------------------------------------------------
 #----------------------------------------------------------    
 #----------------------------------------------------------    
-    
+
 # Event Handlers
+
 
 def get_input(inp: str) -> Optional[bool]:
     """
     Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.
 
+    Acts as a bridge between the GUI input field and the core game logic.
+    Handles any validation errors that may occur during game processing.
+    
     Args:
         inp (str): The user's input string representing their choice.
         
     Returns:
-        Optional[bool]: True if input was valid and processed, False otherwise.
+        Optional[bool]: True if input was valid and processed successfully,
+                       False if input validation failed,
+                       None if an unexpected error occurred
     """
     try:
         rpsls(inp)
@@ -196,8 +268,22 @@ def get_input(inp: str) -> Optional[bool]:
         print(f"Error: {e}")
         return False
 
+
 def create_gui() -> tk.Tk:
-    """Create and configure the game GUI."""
+    """
+    Create and configure the graphical user interface for the game.
+    
+    Builds a simple tkinter window with:
+    - Input field for entering move choices
+    - Submit button to process the input
+    - Basic window styling and layout
+    
+    Returns:
+        tk.Tk: The configured tkinter window object ready for mainloop()
+        
+    Note:
+        The GUI provides a user-friendly alternative to command-line input
+    """
     window = tk.Tk()
     window.title("Rock-paper-scissors-lizard-Spock")
     window.geometry("200x200")
@@ -206,6 +292,7 @@ def create_gui() -> tk.Tk:
     input_field.pack(pady=10)
     
     def on_submit():
+        """Handle submit button click by processing input and clearing field."""
         get_input(input_field.get())
         input_field.delete(0, tk.END)
     
@@ -214,7 +301,10 @@ def create_gui() -> tk.Tk:
     
     return window
 
+
 # Create and start the GUI
+# This conditional ensures the GUI only launches when the script is run directly,
+# not when imported as a module in other Python code
 if __name__ == "__main__":
     window = create_gui()
     window.mainloop()

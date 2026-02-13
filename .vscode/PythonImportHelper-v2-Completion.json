@@ -1548,7 +1548,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def number_to_name(number: int) -> str:\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    Args:\n        number (int): A numeric value between 0 and 4 representing:\n                     0 - rock\n                     1 - spock\n                     2 - paper\n                     3 - lizard\n                     4 - scissors",
+        "peekOfCode": "def number_to_name(number: int) -> str:\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    This is the inverse operation of name_to_number(), allowing conversion\n    from the internal numerical representation back to human-readable move names.\n    Args:\n        number (int): A numeric value between 0 and 4 representing:\n                     0 - rock\n                     1 - spock\n                     2 - paper",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1557,7 +1557,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:\n    \"\"\"\n    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.\n    Args:\n        player_choice (str): The player's choice from VALID_MOVES\n    Returns:\n        Optional[Tuple[str, str, str]]: (player_choice, computer_choice, result)\n                                       None if input is invalid\n    Raises:\n        ValueError: If player_choice is not one of the valid options",
+        "peekOfCode": "def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:\n    \"\"\"\n    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.\n    Implements the complete game logic including:\n    - Input validation\n    - Random computer move generation\n    - Winner determination using modular arithmetic\n    - Console output of game results\n    Game Rules (using modular arithmetic):\n    The winner is determined by (computer_number - player_number) % 5:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1566,7 +1566,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def get_input(inp: str) -> Optional[bool]:\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        Optional[bool]: True if input was valid and processed, False otherwise.\n    \"\"\"\n    try:\n        rpsls(inp)",
+        "peekOfCode": "def get_input(inp: str) -> Optional[bool]:\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    Acts as a bridge between the GUI input field and the core game logic.\n    Handles any validation errors that may occur during game processing.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        Optional[bool]: True if input was valid and processed successfully,\n                       False if input validation failed,",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1575,7 +1575,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def create_gui() -> tk.Tk:\n    \"\"\"Create and configure the game GUI.\"\"\"\n    window = tk.Tk()\n    window.title(\"Rock-paper-scissors-lizard-Spock\")\n    window.geometry(\"200x200\")\n    input_field = tk.Entry(window)\n    input_field.pack(pady=10)\n    def on_submit():\n        get_input(input_field.get())\n        input_field.delete(0, tk.END)",
+        "peekOfCode": "def create_gui() -> tk.Tk:\n    \"\"\"\n    Create and configure the graphical user interface for the game.\n    Builds a simple tkinter window with:\n    - Input field for entering move choices\n    - Submit button to process the input\n    - Basic window styling and layout\n    Returns:\n        tk.Tk: The configured tkinter window object ready for mainloop()\n    Note:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1584,7 +1584,7 @@
         "kind": 5,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])\nWINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")",
+        "peekOfCode": "VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])\n# Set of differences that result in computer winning (see rpsls function for details)\nWINNING_DIFFS = {1, 2}\n# Difference value that indicates a tie game\nTIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"\n    Validate that the player's choice is a valid move.\n    This internal helper function ensures the input is a string and",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1593,7 +1593,7 @@
         "kind": 5,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "WINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:",
+        "peekOfCode": "WINNING_DIFFS = {1, 2}\n# Difference value that indicates a tie game\nTIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"\n    Validate that the player's choice is a valid move.\n    This internal helper function ensures the input is a string and\n    corresponds to one of the five valid game moves.\n    Args:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1602,7 +1602,7 @@
         "kind": 5,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "TIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:\n    \"\"\"Determine the winner based on the difference.\"\"\"",
+        "peekOfCode": "TIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"\n    Validate that the player's choice is a valid move.\n    This internal helper function ensures the input is a string and\n    corresponds to one of the five valid game moves.\n    Args:\n        choice (str): The player's move selection to validate\n    Raises:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
