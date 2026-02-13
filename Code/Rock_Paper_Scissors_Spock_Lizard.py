@@ -18,7 +18,7 @@
 
 import random
 import tkinter as tk
-from typing import Dict
+from typing import Dict, Optional, Tuple
 
 # Module-level constant for conversion
 MOVE_TO_NUMBER: Dict[str, int] = {
@@ -28,6 +28,26 @@ MOVE_TO_NUMBER: Dict[str, int] = {
     "lizard": 3,
     "scissors": 4
 }
+
+# Game constants
+VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])
+WINNING_DIFFS = {1, 2}
+TIE_DIFF = 0
+
+def _validate_choice(choice: str) -> None:
+    """Validate player's choice."""
+    if not isinstance(choice, str):
+        raise ValueError("Choice must be a string")
+    if choice.lower() not in VALID_MOVES:
+        raise ValueError(f"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}")
+
+def _determine_winner(diff: int) -> str:
+    """Determine the winner based on the difference."""
+    if diff in WINNING_DIFFS:
+        return "Computer Wins"
+    if diff == TIE_DIFF:
+        return "Player and computer tie!"
+    return "Player Wins"
 
 # helper functions
 
@@ -115,67 +135,39 @@ def number_to_name(number: int) -> str:
 # Main game function
 #----------------------------------------------------------    
 
-def rpsls(player_choice):
+def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
     """
     Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.
     
-    This function implements the Rock-Paper-Scissors-Lizard-Spock game where
-    the player chooses one of five options and competes against a randomly
-    selected computer choice. The game follows these rules:
-    - Scissors cuts Paper
-    - Paper covers Rock
-    - Rock crushes Lizard
-    - Lizard poisons Spock
-    - Spock smashes Scissors
-    - Scissors decapitates Lizard
-    - Lizard eats Paper
-    - Paper disproves Spock
-    - Spock vaporizes Rock
-    - Rock crushes Scissors
-    
-    Parameters:
-    player_choice (str): The player's choice. Must be one of:
-                        'rock', 'paper', 'scissors', 'lizard', or 'spock'
-                        
+    Args:
+        player_choice (str): The player's choice from VALID_MOVES
+        
     Returns:
-    None: The function prints the game results but doesn't return anything.
-    
-    Side Effects:
-    - Prints game headers
-    - Prints player and computer choices
-    - Prints game result (winner or tie)
-    
+        Optional[Tuple[str, str, str]]: (player_choice, computer_choice, result)
+                                       None if input is invalid
+        
     Raises:
-    ValueError: If player_choice is not one of the valid options
+        ValueError: If player_choice is not one of the valid options
     """
-    
-    print("------------")
-    print("------------")    
-    
-    print("Player chooses " + player_choice)
-    
     try:
+        _validate_choice(player_choice)
         player_number = name_to_number(player_choice)
+        comp_number = random.randrange(5)
+        comp_choice = number_to_name(comp_number)
+        diff = (comp_number - player_number) % 5
+        result = _determine_winner(diff)
+        
+        # UI output
+        print("------------")
+        print("Player chooses", player_choice)
+        print("Computer chooses", comp_choice)
+        print(result)
+        
+        return (player_choice, comp_choice, result)
+        
     except ValueError as e:
         print(f"Error: {e}")
-        return
-    
-    comp_number = random.randrange(0,5)
-    
-    comp_choice = number_to_name(comp_number)
-    
-    print("Computer chooses ", comp_choice)
-    
-    diff = (comp_number - player_number) % 5
-
-    if diff == 1 or diff == 2:
-        print("Computer Wins")
-    
-    elif diff == 3 or diff == 4:
-        print("Player Wins")
-    
-    else:
-        print("Player and computer tie!")
+        return None
  
 #----------------------------------------------------------
 # GUI setup section

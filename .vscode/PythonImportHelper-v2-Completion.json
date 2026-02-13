@@ -44,6 +44,22 @@
         "documentation": {}
     },
     {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "unittest",
         "kind": 6,
         "isExtraImport": true,
@@ -1541,7 +1557,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def rpsls(player_choice):\n    \"\"\"\n    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.\n    This function implements the Rock-Paper-Scissors-Lizard-Spock game where\n    the player chooses one of five options and competes against a randomly\n    selected computer choice. The game follows these rules:\n    - Scissors cuts Paper\n    - Paper covers Rock\n    - Rock crushes Lizard\n    - Lizard poisons Spock",
+        "peekOfCode": "def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:\n    \"\"\"\n    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.\n    Args:\n        player_choice (str): The player's choice from VALID_MOVES\n    Returns:\n        Optional[Tuple[str, str, str]]: (player_choice, computer_choice, result)\n                                       None if input is invalid\n    Raises:\n        ValueError: If player_choice is not one of the valid options",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1560,6 +1576,33 @@
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "peekOfCode": "def on_submit():\n    get_input(input_field.get())\n    input_field.delete(0, tk.END)\nsubmit_button = tk.Button(window, text=\"Submit\", command=on_submit)\nsubmit_button.pack()\n# Starting the Window\nwindow.mainloop()\n\"\"\"\t\n# Test cases section\n# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "VALID_MOVES",
+        "kind": 5,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])\nWINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "WINNING_DIFFS",
+        "kind": 5,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "WINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:\n    \"\"\"Determine the winner based on the difference.\"\"\"",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "TIE_DIFF",
+        "kind": 5,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "TIE_DIFF = 0\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:\n    \"\"\"Determine the winner based on the difference.\"\"\"\n    if diff in WINNING_DIFFS:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
