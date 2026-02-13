@@ -54,22 +54,16 @@ def _validate_choice(choice: str) -> None:
     """
     Validate that the player's choice is a valid move.
     
-    This internal helper function ensures the input is a string and
-    corresponds to one of the five valid game moves.
-    
     Args:
         choice (str): The player's move selection to validate
         
     Raises:
         ValueError: If choice is not a string or not a valid move name
-        
-    Note:
-        This function performs case-insensitive validation
     """
     if not isinstance(choice, str):
         raise ValueError("Choice must be a string")
-    if choice.lower() not in VALID_MOVES:
-        raise ValueError(f"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}")
+    if choice.lower() not in MOVE_TO_NUMBER:
+        raise ValueError(f"Invalid choice. Valid moves are: {', '.join(MOVE_TO_NUMBER)}")
 
 
 def _determine_winner(diff: int) -> str:
