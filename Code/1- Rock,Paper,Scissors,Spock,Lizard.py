@@ -105,7 +105,39 @@ def number_to_name(number):
 #----------------------------------------------------------    
 
 
-def rpsls(player_choice): 
+def rpsls(player_choice):
+    """
+    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.
+    
+    This function implements the Rock-Paper-Scissors-Lizard-Spock game where
+    the player chooses one of five options and competes against a randomly
+    selected computer choice. The game follows these rules:
+    - Scissors cuts Paper
+    - Paper covers Rock
+    - Rock crushes Lizard
+    - Lizard poisons Spock
+    - Spock smashes Scissors
+    - Scissors decapitates Lizard
+    - Lizard eats Paper
+    - Paper disproves Spock
+    - Spock vaporizes Rock
+    - Rock crushes Scissors
+    
+    Parameters:
+    player_choice (str): The player's choice. Must be one of:
+                         'rock', 'paper', 'scissors', 'lizard', or 'spock'
+                         
+    Returns:
+    None: The function prints the game results but doesn't return anything.
+    
+    Side Effects:
+    - Prints game headers
+    - Prints player and computer choices
+    - Prints game result (winner or tie)
+    
+    Raises:
+    ValueError: If player_choice is not one of the valid options
+    """
     
     print "------------"
     print "------------"    
@@ -114,7 +146,7 @@ def rpsls(player_choice):
     
     player_number = name_to_number(player_choice)
     
-	comp_number = random.randrange(0,5)
+    comp_number = random.randrange(0,5)
     
     comp_choice = number_to_name(comp_number)
     
