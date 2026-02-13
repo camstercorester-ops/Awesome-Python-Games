@@ -216,7 +216,6 @@ def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
 
 # Event Handlers
 
-
 def get_input(inp: str) -> Optional[bool]:
     """
     Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.
@@ -257,19 +256,34 @@ def create_gui() -> tk.Tk:
     """
     window = tk.Tk()
     window.title("Rock-paper-scissors-lizard-Spock")
-    window.geometry("200x200")
+    window.geometry("300x150")
+    window.resizable(False, False)
+
+    # Center the window on screen
+    window.eval('tk::PlaceWindow . center')
+
+    # Create and pack widgets
+    tk.Label(window, text="Enter your move:").pack(pady=(10, 0))
     
-    input_field = tk.Entry(window)
-    input_field.pack(pady=10)
-    
-    def on_submit():
-        """Handle submit button click by processing input and clearing field."""
+    input_field = tk.Entry(window, width=20, justify='center')
+    input_field.pack(pady=5)
+    input_field.focus()
+
+    def on_submit(event=None):
+        """Handle submit button click or Return key by processing input and clearing field."""
         get_input(input_field.get())
         input_field.delete(0, tk.END)
-    
-    submit_button = tk.Button(window, text="Submit", command=on_submit)
-    submit_button.pack(pady=10)
-    
+
+    # Bind Return key to submit
+    input_field.bind('<Return>', on_submit)
+
+    submit_button = tk.Button(window, text="Submit", command=on_submit, width=10)
+    submit_button.pack(pady=5)
+
+    # Add instruction label
+    tk.Label(window, text="Valid moves: rock, paper, scissors, lizard, spock",
+             font=("Arial", 8), fg="gray").pack(pady=(0, 10))
+
     return window
 
 
