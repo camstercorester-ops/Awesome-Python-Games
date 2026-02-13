@@ -80,7 +80,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(num_range)\n    remaining_guesses = (num_range - 1).bit_length()\n    print(\"\\n\".join([",
+        "peekOfCode": "def new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(num_range)\n    remaining_guesses = (num_range - 1).bit_length()\n    print(\"\\n\".join([",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -134,7 +134,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "secret_number = 0\nnum_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).",
+        "peekOfCode": "secret_number = 0\nnum_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -143,7 +143,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "num_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"",
+        "peekOfCode": "num_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -152,7 +152,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "remaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game():\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses",
+        "peekOfCode": "remaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

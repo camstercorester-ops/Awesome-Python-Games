@@ -16,7 +16,7 @@ remaining_guesses = 0
 #------------------------------------------
 # helper function to start and restart the game
 
-def new_game():
+def new_game() -> None:
     """
     Start a new game: pick a secret number in [0, num_range) and
     set remaining_guesses to the optimal number of attempts
