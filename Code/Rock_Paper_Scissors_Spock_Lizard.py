@@ -125,10 +125,10 @@ def name_to_number(name: str) -> int:
 def number_to_name(number: int) -> str:
     """
     Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.
-    
+
     This is the inverse operation of name_to_number(), allowing conversion
     from the internal numerical representation back to human-readable move names.
-    
+
     Args:
         number (int): A numeric value between 0 and 4 representing:
                      0 - rock
@@ -136,26 +136,22 @@ def number_to_name(number: int) -> str:
                      2 - paper
                      3 - lizard
                      4 - scissors
-    
+
     Returns:
         str: The name corresponding to the input number.
-    
+
     Raises:
         ValueError: If the input number is not between 0 and 4.
-    
+
     Examples:
         >>> number_to_name(0)
         'rock'
         >>> number_to_name(3)
         'lizard'
     """
-    if not isinstance(number, int):
-        raise ValueError("Input must be an integer")
-        
-    try:
-        return NUMBER_TO_MOVE[number]
-    except KeyError:
-        raise ValueError(f"Invalid number {number}. Must be between 0 and 4")
+    if not 0 <= number <= 4:
+        raise ValueError(f"Invalid number {number!r}. Must be an integer between 0 and 4")
+    return NUMBER_TO_MOVE[number]
     
 #----------------------------------------------------------    
 # Main game function
