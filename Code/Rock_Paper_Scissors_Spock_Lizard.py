@@ -219,14 +219,3 @@ def create_gui() -> tk.Tk:
 if __name__ == "__main__":
     window = create_gui()
     window.mainloop()
-
-    
-"""	
-# Test cases section
-# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE
-rpsls("rock")
-rpsls("Spock")
-rpsls("paper")
-rpsls("lizard")
-rpsls("scissors")
-"""
