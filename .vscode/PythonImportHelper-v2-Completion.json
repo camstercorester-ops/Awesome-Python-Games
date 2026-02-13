@@ -1532,7 +1532,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def number_to_name(number):\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    Parameters:\n        number (int): A numeric value between 0 and 4 representing:\n                    0 - rock\n                    1 - Spock \n                    2 - paper\n                    3 - lizard\n                    4 - scissors",
+        "peekOfCode": "def number_to_name(number: int) -> str:\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    Args:\n        number (int): A numeric value between 0 and 4 representing:\n                     0 - rock\n                     1 - spock\n                     2 - paper\n                     3 - lizard\n                     4 - scissors",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },

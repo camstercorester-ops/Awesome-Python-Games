@@ -78,24 +78,23 @@ def name_to_number(name: str) -> int:
 # Number to name conversion function
 #----------------------------------------------------------
         
-def number_to_name(number):
+def number_to_name(number: int) -> str:
     """
     Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.
     
-    Parameters:
+    Args:
         number (int): A numeric value between 0 and 4 representing:
-                    0 - rock
-                    1 - Spock 
-                    2 - paper
-                    3 - lizard
-                    4 - scissors
+                     0 - rock
+                     1 - spock
+                     2 - paper
+                     3 - lizard
+                     4 - scissors
     
     Returns:
-        str: The name corresponding to the input number if valid
-            None (implicitly) if the number is invalid (prints error message)
+        str: The name corresponding to the input number.
     
-    Prints:
-        Error message if the input number is not between 0 and 4
+    Raises:
+        ValueError: If the input number is not between 0 and 4.
     
     Examples:
         >>> number_to_name(0)
@@ -103,18 +102,13 @@ def number_to_name(number):
         >>> number_to_name(3)
         'lizard'
     """
-    if number == 0:
-        return "rock"
-    elif number == 1:
-        return "Spock" 
-    elif number == 2:
-        return "paper" 
-    elif number == 3:
-        return "lizard" 
-    elif number == 4:
-        return "scissors" 
-    else:
-        print("Error: Not a valid number")
+    if not isinstance(number, int):
+        raise ValueError("Input must be an integer")
+        
+    if number < 0 or number > 4:
+        raise ValueError(f"Invalid number {number}. Must be between 0 and 4")
+        
+    return list(MOVE_TO_NUMBER.keys())[number]
 
     
 #----------------------------------------------------------    
