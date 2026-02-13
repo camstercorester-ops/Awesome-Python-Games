@@ -89,34 +89,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    upper_bound = new_upper_bound\n    start_new_game()\ndef set_range_to_100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_game_range(100)\ndef set_range_to_1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"",
-        "detail": "Code.2- Guess the Number",
-        "documentation": {}
-    },
-    {
-        "label": "set_range_to_100",
-        "kind": 2,
-        "importPath": "Code.2- Guess the Number",
-        "description": "Code.2- Guess the Number",
-        "peekOfCode": "def set_range_to_100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_game_range(100)\ndef set_range_to_1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_game_range(1000)\ndef reset_game() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    start_new_game()\ndef process_player_guess(player_guess: str) -> None:",
-        "detail": "Code.2- Guess the Number",
-        "documentation": {}
-    },
-    {
-        "label": "set_range_to_1000",
-        "kind": 2,
-        "importPath": "Code.2- Guess the Number",
-        "description": "Code.2- Guess the Number",
-        "peekOfCode": "def set_range_to_1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_game_range(1000)\ndef reset_game() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    start_new_game()\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    try:",
-        "detail": "Code.2- Guess the Number",
-        "documentation": {}
-    },
-    {
-        "label": "reset_game",
-        "kind": 2,
-        "importPath": "Code.2- Guess the Number",
-        "description": "Code.2- Guess the Number",
-        "peekOfCode": "def reset_game() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    start_new_game()\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    try:\n        guessed_number = int(player_guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")",
+        "peekOfCode": "def set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    if new_upper_bound not in _RANGES:   # fast membership check\n        return\n    upper_bound = new_upper_bound\n    start_new_game()\n# Use lambdas to avoid extra function calls\nset_range_to_100  = lambda: set_game_range(100)\nset_range_to_1000 = lambda: set_game_range(1000)",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -125,7 +98,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    try:\n        guessed_number = int(player_guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    print(f\"Guess was {guessed_number}\")\n    if guessed_number < secret_number:",
+        "peekOfCode": "def process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    # Fast-path integer parsing\n    if not player_guess.isdigit():\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    guessed_number = int(player_guess)\n    print(f\"Guess was {guessed_number}\")\n    # Single comparison chain",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -153,6 +126,24 @@
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
         "peekOfCode": "remaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "_RANGES",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "_RANGES = {100, 1000}\ndef set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    if new_upper_bound not in _RANGES:   # fast membership check\n        return\n    upper_bound = new_upper_bound\n    start_new_game()\n# Use lambdas to avoid extra function calls\nset_range_to_100  = lambda: set_game_range(100)",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "set_range_to_1000",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "set_range_to_1000 = lambda: set_game_range(1000)\nreset_game        = start_new_game\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    # Fast-path integer parsing\n    if not player_guess.isdigit():\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    guessed_number = int(player_guess)",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

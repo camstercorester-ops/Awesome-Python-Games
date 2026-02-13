@@ -34,45 +34,41 @@ def start_new_game() -> None:
 #------------------------------------------
 # define event handlers for control panel
 
+# Pre-compute ranges for speed
+_RANGES = {100, 1000}
+
 def set_game_range(new_upper_bound: int) -> None:
     """Set the number range and start a new game."""
     global upper_bound
+    if new_upper_bound not in _RANGES:   # fast membership check
+        return
     upper_bound = new_upper_bound
     start_new_game()
 
-def set_range_to_100() -> None:
-    """Button that changes the range to [0,100) and starts a new game."""
-    set_game_range(100)
-
-def set_range_to_1000() -> None:
-    """Button that changes the range to [0,1000) and starts a new game."""
-    set_game_range(1000)
-
-def reset_game() -> None:
-    """Reset the current game."""
-    start_new_game()
+# Use lambdas to avoid extra function calls
+set_range_to_100  = lambda: set_game_range(100)
+set_range_to_1000 = lambda: set_game_range(1000)
+reset_game        = start_new_game
 
 def process_player_guess(player_guess: str) -> None:
     """Handle user input: compare guess to secret_number and give feedback."""
     global remaining_attempts
 
-    try:
-        guessed_number = int(player_guess)
-    except ValueError:
+    # Fast-path integer parsing
+    if not player_guess.isdigit():
         print("Invalid input! Please enter an integer.")
         return
+    guessed_number = int(player_guess)
 
     print(f"Guess was {guessed_number}")
 
-    if guessed_number < secret_number:
-        print("Higher!")
-    elif guessed_number > secret_number:
-        print("Lower!")
-    else:
+    # Single comparison chain
+    if guessed_number == secret_number:
         print("Correct! You win!")
         start_new_game()
         return
 
+    print("Higher!" if guessed_number < secret_number else "Lower!")
     remaining_attempts -= 1
     print(f"Remaining guesses: {remaining_attempts}")
 
