@@ -34,6 +34,8 @@ VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])
 WINNING_DIFFS = {1, 2}
 TIE_DIFF = 0
 
+# helper functions
+
 def _validate_choice(choice: str) -> None:
     """Validate player's choice."""
     if not isinstance(choice, str):
@@ -49,7 +51,11 @@ def _determine_winner(diff: int) -> str:
         return "Player and computer tie!"
     return "Player Wins"
 
-# helper functions
+def _validate_input(choice: str) -> bool:
+    """Validate if the input is a valid move."""
+    if not isinstance(choice, str):
+        return False
+    return choice.lower() in VALID_MOVES
 
 def name_to_number(name: str) -> int:
     """
@@ -177,29 +183,33 @@ def rpsls(player_choice: str) -> Optional[Tuple[str, str, str]]:
     
 # Event Handlers
 
-def get_input(inp):
+def get_input(inp: str) -> Optional[bool]:
     """
     Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.
 
-    This function validates the input string against the valid options 
-    (rock, paper, lizard, Spock, scissors) and either calls the game function 
-    with valid input or prints an error message for invalid input.
-
     Args:
         inp (str): The user's input string representing their choice.
-
+        
     Returns:
-        None: The function either calls rpsls() or prints an error message.
-    
-    Side Effects:
-        - Calls rpsls() function if input is valid
-        - Prints error message if input is invalid
+        Optional[bool]: True if input was valid and processed, False otherwise.
+        
+    Raises:
+        ValueError: If input is not a string.
     """
-    
-    if (inp == "rock" or inp == "paper" or inp == "lizard" or inp == "Spock" or inp == "scissors"):
-        rpsls(inp)
-    else:
-        print("Error: Invalid Input")
+    try:
+        if not isinstance(inp, str):
+            raise ValueError("Input must be a string")
+            
+        if _validate_input(inp):
+            rpsls(inp.lower())
+            return True
+        else:
+            print(f"Error: Invalid Input. Valid moves are: {', '.join(VALID_MOVES)}")
+            return False
+            
+    except ValueError as e:
+        print(f"Error: {e}")
+        return False
 
 # Creating a Window
 window = tk.Tk()

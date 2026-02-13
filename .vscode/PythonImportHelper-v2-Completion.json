@@ -1566,7 +1566,7 @@
         "kind": 2,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "def get_input(inp):\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    This function validates the input string against the valid options \n    (rock, paper, lizard, Spock, scissors) and either calls the game function \n    with valid input or prints an error message for invalid input.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        None: The function either calls rpsls() or prints an error message.",
+        "peekOfCode": "def get_input(inp: str) -> Optional[bool]:\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        Optional[bool]: True if input was valid and processed, False otherwise.\n    Raises:\n        ValueError: If input is not a string.\n    \"\"\"",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1584,7 +1584,7 @@
         "kind": 5,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])\nWINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:",
+        "peekOfCode": "VALID_MOVES = frozenset(['rock', 'paper', 'scissors', 'lizard', 'spock'])\nWINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1593,7 +1593,7 @@
         "kind": 5,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "WINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:\n    \"\"\"Determine the winner based on the difference.\"\"\"",
+        "peekOfCode": "WINNING_DIFFS = {1, 2}\nTIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
@@ -1602,7 +1602,7 @@
         "kind": 5,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "TIE_DIFF = 0\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:\n    \"\"\"Determine the winner based on the difference.\"\"\"\n    if diff in WINNING_DIFFS:",
+        "peekOfCode": "TIE_DIFF = 0\n# helper functions\ndef _validate_choice(choice: str) -> None:\n    \"\"\"Validate player's choice.\"\"\"\n    if not isinstance(choice, str):\n        raise ValueError(\"Choice must be a string\")\n    if choice.lower() not in VALID_MOVES:\n        raise ValueError(f\"Invalid choice. Valid moves are: {', '.join(VALID_MOVES)}\")\ndef _determine_winner(diff: int) -> str:\n    \"\"\"Determine the winner based on the difference.\"\"\"",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
