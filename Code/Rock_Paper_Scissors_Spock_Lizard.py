@@ -54,12 +54,6 @@ def _determine_winner(diff: int) -> str:
         return "Player and computer tie!"
     return "Player Wins"
 
-def _validate_input(choice: str) -> bool:
-    """Validate if the input is a valid move."""
-    if not isinstance(choice, str):
-        return False
-    return choice.lower() in VALID_MOVES
-
 def name_to_number(name: str) -> int:
     """
     Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.
@@ -214,24 +208,29 @@ def get_input(inp: str) -> Optional[bool]:
         print(f"Error: {e}")
         return False
 
-# Creating a Window
-window = tk.Tk()
-window.title("Rock-paper-scissors-lizard-Spock")
-window.geometry("200x200")
+def create_gui() -> tk.Tk:
+    """Create and configure the game GUI."""
+    window = tk.Tk()
+    window.title("Rock-paper-scissors-lizard-Spock")
+    window.geometry("200x200")
+    
+    input_field = tk.Entry(window)
+    input_field.pack(pady=10)
+    
+    def on_submit():
+        get_input(input_field.get())
+        input_field.delete(0, tk.END)
+    
+    submit_button = tk.Button(window, text="Submit", command=on_submit)
+    submit_button.pack(pady=10)
+    
+    return window
 
-# Creating an input field and button
-input_field = tk.Entry(window)
-input_field.pack()
+# Create and start the GUI
+if __name__ == "__main__":
+    window = create_gui()
+    window.mainloop()
 
-def on_submit():
-    get_input(input_field.get())
-    input_field.delete(0, tk.END)
-
-submit_button = tk.Button(window, text="Submit", command=on_submit)
-submit_button.pack()
-
-# Starting the Window
-window.mainloop()
     
 """	
 # Test cases section
