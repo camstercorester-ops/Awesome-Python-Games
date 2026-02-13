@@ -21,6 +21,7 @@ _total_attempts = 0        # how many times the user pressed Stop
 _successful_attempts = 0   # how many stops landed on a whole second
 _timer_is_paused = True    # flag indicating if the timer is currently paused
 _state_lock = threading.Lock()  # Lock to protect concurrent access
+_MAX_ATTEMPTS = 5          # maximum attempts allowed before forced reset
 
 # =============================================================================
 #  2. Helper Functions
@@ -92,6 +93,8 @@ def start_timer() -> None:
     with _state_lock:
         if not _timer_is_paused:
             return  # Prevent double-start
+        if _total_attempts >= _MAX_ATTEMPTS:
+            return  # Do not allow starting if max attempts reached
         _timer_is_paused = False
     stopwatch_timer.start()
 
@@ -113,6 +116,9 @@ def stop_timer(*args) -> None:
     stopwatch_timer.stop()
     refresh_display()
     show_accuracy_popup()
+    # Force reset if max attempts reached
+    if _total_attempts >= _MAX_ATTEMPTS:
+        root.after(1000, reset_timer)
 
 
 def reset_timer(*args) -> None:
@@ -249,7 +255,7 @@ reset_button.pack(side="left", padx=5, pady=5)
 # =============================================================================
 
 # Use root.bind_all to ensure no widget overrides these bindings
-root.bind_all("<space>", lambda e: start_timer() if _timer_is_paused else stop_timer())
+root.bind_all("<space>", lambda e: start_timer() if _timer_is_paused and _total_attempts < _MAX_ATTEMPTS else (stop_timer() if not _timer_is_paused else None))
 root.bind_all("<r>", lambda e: reset_timer())
 
 # =============================================================================
