@@ -9,11 +9,12 @@
         "documentation": {}
     },
     {
-        "label": "name",
-        "importPath": "unicodedata",
-        "description": "unicodedata",
+        "label": "math",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "unicodedata",
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
         "documentation": {}
     },
     {
@@ -26,57 +27,29 @@
         "documentation": {}
     },
     {
-        "label": "math",
+        "label": "tkinter",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "math",
-        "description": "math",
-        "detail": "math",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
         "documentation": {}
     },
     {
         "label": "name_to_number",
-        "kind": 2,
-        "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def name_to_number(name):\n    \"\"\"\n    Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.\n    The conversion follows the standard mapping:\n    - rock -> 0\n    - Spock -> 1\n    - paper -> 2\n    - lizard -> 3\n    - scissors -> 4\n    Args:",
-        "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "documentation": {}
-    },
-    {
-        "label": "number_to_name",
-        "kind": 2,
-        "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def number_to_name(number):\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    Parameters:\n        number (int): A numeric value between 0 and 4 representing:\n                      0 - rock\n                      1 - Spock\n                      2 - paper\n                      3 - lizard\n                      4 - scissors",
-        "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "documentation": {}
-    },
-    {
-        "label": "rpsls",
-        "kind": 2,
-        "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def rpsls(player_choice):\n    \"\"\"\n    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.\n    This function implements the Rock-Paper-Scissors-Lizard-Spock game where\n    the player chooses one of five options and competes against a randomly\n    selected computer choice. The game follows these rules:\n    - Scissors cuts Paper\n    - Paper covers Rock\n    - Rock crushes Lizard\n    - Lizard poisons Spock",
-        "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "documentation": {}
-    },
-    {
-        "label": "get_input",
-        "kind": 2,
-        "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def get_input(inp):\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    This function validates the input string against the valid options \n    (rock, paper, lizard, Spock, scissors) and either calls the game function \n    with valid input or prints an error message for invalid input.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        None: The function either calls rpsls() or prints an error message.",
-        "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "documentation": {}
-    },
-    {
-        "label": "frame",
-        "kind": 5,
-        "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "frame = simplegui.create_frame(\"Rock-paper-scissors-lizard-Spock\",200,200)\n# Registering Handlers\nframe.add_input(\"Enter your choice: \", get_input,200)\t\n# Starting the Frame\nframe.start()\t\n\"\"\"\t\n# Test cases section\n# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE\nrpsls(\"rock\")\nrpsls(\"Spock\")",
-        "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "isExtraImport": true,
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
     {
@@ -1535,6 +1508,87 @@
         "description": "Code.8- Asteroids-RiceRocks",
         "peekOfCode": "timer = simplegui.create_timer(1000.0, rock_spawner)\n#-------------------------------------------------------------------\n# get things rolling\ntimer.start()\nframe.start()",
         "detail": "Code.8- Asteroids-RiceRocks",
+        "documentation": {}
+    },
+    {
+        "label": "name_to_number",
+        "kind": 2,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "def name_to_number(name):\n    \"\"\"\n    Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.\n    The conversion follows the standard mapping:\n    - rock -> 0\n    - Spock -> 1\n    - paper -> 2\n    - lizard -> 3\n    - scissors -> 4\n    Args:",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "number_to_name",
+        "kind": 2,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "def number_to_name(number):\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    Parameters:\n        number (int): A numeric value between 0 and 4 representing:\n                    0 - rock\n                    1 - Spock \n                    2 - paper\n                    3 - lizard\n                    4 - scissors",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "rpsls",
+        "kind": 2,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "def rpsls(player_choice):\n    \"\"\"\n    Play a game of Rock-Paper-Scissors-Lizard-Spock against the computer.\n    This function implements the Rock-Paper-Scissors-Lizard-Spock game where\n    the player chooses one of five options and competes against a randomly\n    selected computer choice. The game follows these rules:\n    - Scissors cuts Paper\n    - Paper covers Rock\n    - Rock crushes Lizard\n    - Lizard poisons Spock",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "get_input",
+        "kind": 2,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "def get_input(inp):\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    This function validates the input string against the valid options \n    (rock, paper, lizard, Spock, scissors) and either calls the game function \n    with valid input or prints an error message for invalid input.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        None: The function either calls rpsls() or prints an error message.",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "on_submit",
+        "kind": 2,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "def on_submit():\n    get_input(input_field.get())\n    input_field.delete(0, tk.END)\nsubmit_button = tk.Button(window, text=\"Submit\", command=on_submit)\nsubmit_button.pack()\n# Starting the Window\nwindow.mainloop()\n\"\"\"\t\n# Test cases section\n# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "window",
+        "kind": 5,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "window = tk.Tk()\nwindow.title(\"Rock-paper-scissors-lizard-Spock\")\nwindow.geometry(\"200x200\")\n# Creating an input field and button\ninput_field = tk.Entry(window)\ninput_field.pack()\ndef on_submit():\n    get_input(input_field.get())\n    input_field.delete(0, tk.END)\nsubmit_button = tk.Button(window, text=\"Submit\", command=on_submit)",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "input_field",
+        "kind": 5,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "input_field = tk.Entry(window)\ninput_field.pack()\ndef on_submit():\n    get_input(input_field.get())\n    input_field.delete(0, tk.END)\nsubmit_button = tk.Button(window, text=\"Submit\", command=on_submit)\nsubmit_button.pack()\n# Starting the Window\nwindow.mainloop()\n\"\"\"\t",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "submit_button",
+        "kind": 5,
+        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "peekOfCode": "submit_button = tk.Button(window, text=\"Submit\", command=on_submit)\nsubmit_button.pack()\n# Starting the Window\nwindow.mainloop()\n\"\"\"\t\n# Test cases section\n# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE\nrpsls(\"rock\")\nrpsls(\"Spock\")\nrpsls(\"paper\")",
+        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "documentation": {}
+    },
+    {
+        "label": "TestNameToNumber",
+        "kind": 6,
+        "importPath": "Code.TestNameToNumber",
+        "description": "Code.TestNameToNumber",
+        "peekOfCode": "class TestNameToNumber(unittest.TestCase):\n    def test_valid_moves(self):\n        # Test all valid moves\n        self.assertEqual(name_to_number(\"rock\"), 0)\n        self.assertEqual(name_to_number(\"Spock\"), 1)\n        self.assertEqual(name_to_number(\"paper\"), 2)\n        self.assertEqual(name_to_number(\"lizard\"), 3)\n        self.assertEqual(name_to_number(\"scissors\"), 4)\n    def test_invalid_move(self):\n        # Test invalid move",
+        "detail": "Code.TestNameToNumber",
         "documentation": {}
     }
 ]

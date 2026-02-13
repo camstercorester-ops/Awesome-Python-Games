@@ -17,8 +17,7 @@
 #----------------------------------------------------------
 
 import random
-from unicodedata import name
-import simplegui
+import tkinter as tk
 
 # helper functions
 
@@ -75,15 +74,15 @@ def number_to_name(number):
     
     Parameters:
         number (int): A numeric value between 0 and 4 representing:
-                      0 - rock
-                      1 - Spock
-                      2 - paper
-                      3 - lizard
-                      4 - scissors
+                    0 - rock
+                    1 - Spock 
+                    2 - paper
+                    3 - lizard
+                    4 - scissors
     
     Returns:
         str: The name corresponding to the input number if valid
-             None (implicitly) if the number is invalid (prints error message)
+            None (implicitly) if the number is invalid (prints error message)
     
     Prints:
         Error message if the input number is not between 0 and 4
@@ -132,8 +131,8 @@ def rpsls(player_choice):
     
     Parameters:
     player_choice (str): The player's choice. Must be one of:
-                         'rock', 'paper', 'scissors', 'lizard', or 'spock'
-                         
+                        'rock', 'paper', 'scissors', 'lizard', or 'spock'
+                        
     Returns:
     None: The function prints the game results but doesn't return anything.
     
@@ -205,15 +204,25 @@ def get_input(inp):
         rpsls(inp)
     else:
         print("Error: Invalid Input")
-	
-# Creating a Frame
-frame = simplegui.create_frame("Rock-paper-scissors-lizard-Spock",200,200)
 
-# Registering Handlers
-frame.add_input("Enter your choice: ", get_input,200)	
-	
-# Starting the Frame
-frame.start()	
+# Creating a Window
+window = tk.Tk()
+window.title("Rock-paper-scissors-lizard-Spock")
+window.geometry("200x200")
+
+# Creating an input field and button
+input_field = tk.Entry(window)
+input_field.pack()
+
+def on_submit():
+    get_input(input_field.get())
+    input_field.delete(0, tk.END)
+
+submit_button = tk.Button(window, text="Submit", command=on_submit)
+submit_button.pack()
+
+# Starting the Window
+window.mainloop()
     
 """	
 # Test cases section
