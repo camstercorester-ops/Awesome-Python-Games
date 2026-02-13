@@ -85,9 +85,8 @@ def input_guess(guess):
 
 #------------------------------------------
         
-# create frame
-
-frame = simplegui.create_frame("Guess the Number", 200, 200)
+# create frame with a more descriptive title and larger size for better UX
+frame = simplegui.create_frame("Guess the Number Game", 300, 250)
 
 #------------------------------------------
 
