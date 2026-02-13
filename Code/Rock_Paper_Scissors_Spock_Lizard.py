@@ -105,47 +105,50 @@ class RPSLSGui:
             # --- Scoreboard ---
             score_frame = tk.Frame(self.root, relief="groove", bd=2)
             score_frame.pack(pady=6)
-            self.score_lbl = tk.Label(score_frame, text=self._score_text(),
-                                      font=("Arial", 10))
+            self.score_lbl = tk.Label(score_frame, text=self._score_text(),bg="lightgray", font=("Arial", 10))
             self.score_lbl.pack(padx=10, pady=4)
+            
+            # --- Close button ---
+            tk.Button(self.root, text="Close", command=self.root.destroy,
+                      width=10, default="active", bg="lightgray").pack(pady=6)
 
             # --- Input area ---
-            input_frame = tk.Frame(self.root)
+            input_frame = tk.Frame(self.root, bg="lightgray")
             input_frame.pack(pady=6)
-            tk.Label(input_frame, text="Enter your move:").pack()
+            tk.Label(input_frame, text="Enter your move:", bg="lightgray").pack(side="left")
             self.entry = tk.Entry(input_frame, width=20, justify="center")
-            self.entry.pack()
+            self.entry.pack(side="left")
             self.entry.focus()
             self.entry.bind("<Return>", self._on_submit)
 
             # --- Quick pick buttons ---
-            btn_frame = tk.Frame(self.root)
+            btn_frame = tk.Frame(self.root, bg="lightgray")
             btn_frame.pack(pady=6)
             for move in Move:
-                tk.Button(btn_frame, text=move.name.lower(),
-                          command=lambda m=move: self._quick_move(m),
-                          width=8).pack(side="left", padx=2)
+                tk.Button(btn_frame, text=move.name.lower(), command=lambda m=move: self._quick_move(m), width=8, bg="lightgray").pack(side="left", padx=2)
 
             # --- Submit / Clear / History toggle ---
-            ctrl_frame = tk.Frame(self.root)
+            ctrl_frame = tk.Frame(self.root, bg="lightgray")
             ctrl_frame.pack(pady=6)
             tk.Button(ctrl_frame, text="Submit", command=self._on_submit,
-                      width=10, default="active").pack(side="left", padx=4)
+                      width=10, default="active", bg="lightgray").pack(side="left", padx=4)
             tk.Button(ctrl_frame, text="Clear", command=self._clear_entry,
-                      width=8).pack(side="left", padx=4)
+                      width=8, bg="lightgray").pack(side="left", padx=4)
             self.history_btn = tk.Button(ctrl_frame, text="Show History",
-                                         command=self._toggle_history, width=12)
+                                         command=self._toggle_history, width=12, bg="lightgray")
             self.history_btn.pack(side="left", padx=4)
 
             # --- Result display ---
-            self.result_lbl = tk.Label(self.root, text="",
+            result_frame = tk.Frame(self.root, bg="lightgray")
+            result_frame.pack(pady=6)
+            self.result_lbl = tk.Label(result_frame, text="",
                                        font=("Arial", 11, "italic"), fg="blue")
             self.result_lbl.pack(pady=6)
 
             # --- History list (hidden by default) ---
             self.history_shown = False
-            self.history_frame = tk.Frame(self.root)
-            self.history_listbox = tk.Listbox(self.history_frame, height=6, width=50)
+            self.history_frame = tk.Frame(self.root, bg="lightgray")
+            self.history_listbox = tk.Listbox(self.history_frame, height=6, width=50, bg="lightgray")
             scrollbar = tk.Scrollbar(self.history_frame, orient="vertical")
             scrollbar.config(command=self.history_listbox.yview)
             self.history_listbox.config(yscrollcommand=scrollbar.set)
@@ -154,7 +157,7 @@ class RPSLSGui:
 
             # --- Status bar ---
             self.status = tk.Label(self.root, text="Ready", bd=1, relief="sunken",
-                                   anchor="w", font=("Arial", 8))
+                                   anchor="w", font=("Arial", 8), bg="lightgray"   )
             self.status.pack(side="bottom", fill="x")
 
         except Exception as e:
