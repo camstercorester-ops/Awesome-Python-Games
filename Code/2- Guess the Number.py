@@ -4,7 +4,8 @@
 
 import random
 import math
-import simplegui
+import tkinter as tk
+from tkinter import ttk
 
 #------------------------------------------
 # declaring global variables
@@ -18,6 +19,7 @@ history = []  # store last few guesses for hints
 #------------------------------------------
 # helper function to start and restart the game
 
+
 def start_new_game() -> None:
     """
     Start a new game: pick a secret number in [0, upper_bound) and
@@ -30,6 +32,7 @@ def start_new_game() -> None:
     history = []  # reset guess history
     update_status()
 
+
 def update_status():
     """Refresh the status label with current game info."""
     status = (f"Range: 0-{upper_bound-1}  |  "
@@ -37,12 +40,14 @@ def update_status():
               f"Wins: {total_wins}/{total_games}")
     if best_score[upper_bound] is not None:
         status += f"  |  Best: {best_score[upper_bound]}"
-    status_label.set_text(status)
+    status_var.set(status)
 
 #------------------------------------------
 # define event handlers for control panel
 
+
 _RANGES = {100, 1000}
+
 
 def set_game_range(new_upper_bound: int) -> None:
     """Set the number range and start a new game."""
@@ -52,9 +57,11 @@ def set_game_range(new_upper_bound: int) -> None:
     upper_bound = new_upper_bound
     start_new_game()
 
-set_range_to_100  = lambda: set_game_range(100)
+
+set_range_to_100 = lambda: set_game_range(100)
 set_range_to_1000 = lambda: set_game_range(1000)
-reset_game        = start_new_game
+reset_game = start_new_game
+
 
 def process_player_guess(player_guess: str) -> None:
     """Handle user input: compare guess to secret_number and give feedback."""
@@ -97,70 +104,86 @@ def process_player_guess(player_guess: str) -> None:
         print(f"You ran out of guesses. The secret number was {secret_number}.")
         start_new_game()
 
+
 def get_hint():
     """Reveal one bit of information: parity."""
     if secret_number % 2 == 0:
         print("Hint: The secret number is even.")
     else:
         print("Hint: The secret number is odd.")
-    hint_button.set_enabled(False)
+    hint_button.config(state="disabled")
+
 
 #------------------------------------------
 # Build UI
-frame = simplegui.create_frame("Guess the Number", 400, 280)
-frame.set_canvas_background("#f0f0f8")
+root = tk.Tk()
+root.title("Guess the Number")
+root.geometry("400x420")
+root.configure(bg="#f0f0f8")
 
-# Status bar
-status_label = frame.add_label("", 380)
-status_label.set_text("Loading...")
+status_var = tk.StringVar()
+status_label = ttk.Label(root, textvariable=status_var, anchor="w")
+status_label.pack(fill="x", padx=10, pady=5)
 
-# Spacer
-frame.add_label("", 380)
+ttk.Separator(root, orient="horizontal").pack(fill="x", pady=5)
 
-# Range buttons
-frame.add_button("Range: 0-99", set_range_to_100, 150)
-frame.add_button("Range: 0-999", set_range_to_1000, 150)
+range_frame = ttk.Frame(root)
+range_frame.pack(fill="x", padx=10, pady=5)
+ttk.Button(range_frame, text="Range: 0-99", command=set_range_to_100).pack(side="left", padx=5)
+ttk.Button(range_frame, text="Range: 0-999", command=set_range_to_1000).pack(side="left", padx=5)
 
-# Spacer
-frame.add_label("", 380)
+ttk.Separator(root, orient="horizontal").pack(fill="x", pady=5)
 
-# Input with label
-frame.add_label("Enter your guess:", 380)
-guess_input = frame.add_input("", process_player_guess, 380)
+ttk.Label(root, text="Enter your guess:").pack(anchor="w", padx=10)
+guess_entry = ttk.Entry(root)
+guess_entry.pack(fill="x", padx=10, pady=5)
+guess_entry.bind("<Return>", lambda e: process_player_guess(guess_entry.get()))
 
-# Spacer
-frame.add_label("", 380)
+ttk.Separator(root, orient="horizontal").pack(fill="x", pady=5)
 
-# Action buttons
-hint_button = frame.add_button("Get a Hint (once/game)", get_hint, 150)
-frame.add_button("New Game", reset_game, 150)
+action_frame = ttk.Frame(root)
+action_frame.pack(fill="x", padx=10, pady=5)
+hint_button = ttk.Button(action_frame, text="Get a Hint (once/game)", command=get_hint)
+hint_button.pack(side="left", padx=5)
+ttk.Button(action_frame, text="New Game", command=reset_game).pack(side="left", padx=5)
 
-# Spacer
-frame.add_label("", 380)
+ttk.Separator(root, orient="horizontal").pack(fill="x", pady=5)
 
-# History box
-history_label = frame.add_label("Recent guesses: None", 380)
+history_var = tk.StringVar(value="Recent guesses: None")
+history_label = ttk.Label(root, textvariable=history_var, anchor="w")
+history_label.pack(fill="x", padx=10, pady=5)
+
 
 def update_history():
     if history:
-        history_label.set_text("Recent guesses: " + ", ".join(map(str, history[-5:])))
+        history_var.set("Recent guesses: " + ", ".join(map(str, history[-5:])))
     else:
-        history_label.set_text("Recent guesses: None")
+        history_var.set("Recent guesses: None")
+
 
 old_process = process_player_guess
+
+
 def process_player_guess_wrap(g):
     old_process(g)
     update_history()
     update_status()
+    guess_entry.delete(0, tk.END)
+
+
 process_player_guess = process_player_guess_wrap
 
 old_start = start_new_game
+
+
 def start_new_game_wrap():
     old_start()
     update_status()
-    hint_button.set_enabled(True)
+    hint_button.config(state="normal")
     update_history()
+
+
 start_new_game = start_new_game_wrap
 
 start_new_game()
-frame.start()
+root.mainloop()
