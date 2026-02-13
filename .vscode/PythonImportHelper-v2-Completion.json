@@ -148,20 +148,29 @@
         "documentation": {}
     },
     {
-        "label": "game_frame",
+        "label": "frame",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "game_frame = simplegui.create_frame(\"Guess the Number\", 300, 200)\n# Add control buttons with consistent width\nBUTTON_WIDTH = 150\ngame_frame.add_button(\"Range: 0-99\", set_range_to_100, BUTTON_WIDTH)\ngame_frame.add_button(\"Range: 0-999\", set_range_to_1000, BUTTON_WIDTH)\ngame_frame.add_button(\"New Game\", reset_game, BUTTON_WIDTH)\n# Add input field for guesses\ngame_frame.add_input(\"Your guess:\", process_player_guess, BUTTON_WIDTH)\n# Start the first game\nstart_new_game()",
+        "peekOfCode": "frame = simplegui.create_frame(\"Guess the Number\", 300, 200)\nW = 150\nadd = frame.add_button, frame.add_input\nadd[0](\"Range: 0-99\", set_range_to_100, W)\nadd[0](\"Range: 0-999\", set_range_to_1000, W)\nadd[0](\"New Game\", reset_game, W)\nadd[1](\"Your guess:\", process_player_guess, W)\nstart_new_game()\nframe.start()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "BUTTON_WIDTH",
+        "label": "W",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "BUTTON_WIDTH = 150\ngame_frame.add_button(\"Range: 0-99\", set_range_to_100, BUTTON_WIDTH)\ngame_frame.add_button(\"Range: 0-999\", set_range_to_1000, BUTTON_WIDTH)\ngame_frame.add_button(\"New Game\", reset_game, BUTTON_WIDTH)\n# Add input field for guesses\ngame_frame.add_input(\"Your guess:\", process_player_guess, BUTTON_WIDTH)\n# Start the first game\nstart_new_game()\n# Start the GUI event loop\ngame_frame.start()",
+        "peekOfCode": "W = 150\nadd = frame.add_button, frame.add_input\nadd[0](\"Range: 0-99\", set_range_to_100, W)\nadd[0](\"Range: 0-999\", set_range_to_1000, W)\nadd[0](\"New Game\", reset_game, W)\nadd[1](\"Your guess:\", process_player_guess, W)\nstart_new_game()\nframe.start()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "add",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "add = frame.add_button, frame.add_input\nadd[0](\"Range: 0-99\", set_range_to_100, W)\nadd[0](\"Range: 0-999\", set_range_to_1000, W)\nadd[0](\"New Game\", reset_game, W)\nadd[1](\"Your guess:\", process_player_guess, W)\nstart_new_game()\nframe.start()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

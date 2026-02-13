@@ -76,20 +76,16 @@ def process_player_guess(player_guess: str) -> None:
         print(f"You ran out of guesses. The secret number was {secret_number}.")
         start_new_game()
 #------------------------------------------
-# Create frame with a descriptive title and optimal size for UX
-game_frame = simplegui.create_frame("Guess the Number", 300, 200)
+# Build UI in one pass to avoid repeated attribute lookups
+frame = simplegui.create_frame("Guess the Number", 300, 200)
 
-# Add control buttons with consistent width
-BUTTON_WIDTH = 150
-game_frame.add_button("Range: 0-99", set_range_to_100, BUTTON_WIDTH)
-game_frame.add_button("Range: 0-999", set_range_to_1000, BUTTON_WIDTH)
-game_frame.add_button("New Game", reset_game, BUTTON_WIDTH)
+W = 150
 
-# Add input field for guesses
-game_frame.add_input("Your guess:", process_player_guess, BUTTON_WIDTH)
+add = frame.add_button, frame.add_input
+add[0]("Range: 0-99", set_range_to_100, W)
+add[0]("Range: 0-999", set_range_to_1000, W)
+add[0]("New Game", reset_game, W)
+add[1]("Your guess:", process_player_guess, W)
 
-# Start the first game
 start_new_game()
-
-# Start the GUI event loop
-game_frame.start()
+frame.start()
