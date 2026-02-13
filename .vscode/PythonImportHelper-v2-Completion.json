@@ -31,7 +31,7 @@
         "kind": 2,
         "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def name_to_number(name):\n    if name == \"rock\":\n        return 0\n    elif name == \"Spock\":\n        return 1\n    elif name == \"paper\":\n        return 2\n    elif name == \"lizard\":\n        return 3\n    elif name == \"scissors\":",
+        "peekOfCode": "def name_to_number(name):\n    \"\"\"\n    Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.\n    The conversion follows the standard mapping:\n    - rock -> 0\n    - Spock -> 1\n    - paper -> 2\n    - lizard -> 3\n    - scissors -> 4\n    Args:",
         "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "documentation": {}
     },
@@ -40,7 +40,7 @@
         "kind": 2,
         "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def number_to_name(number):\n    # convert number to a name using if/elif/else\n    # don't forget to return the result!\n    if number == 0:\n        return \"rock\"\n    elif number == 1:\n        return \"Spock\" \n    elif number == 2:\n        return \"paper\" \n    elif number == 3:",
+        "peekOfCode": "def number_to_name(number):\n    \"\"\"\n    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.\n    Parameters:\n        number (int): A numeric value between 0 and 4 representing:\n                      0 - rock\n                      1 - Spock\n                      2 - paper\n                      3 - lizard\n                      4 - scissors",
         "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "documentation": {}
     },

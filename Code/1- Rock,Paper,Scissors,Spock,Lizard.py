@@ -21,6 +21,31 @@ import simplegui
 # helper functions
 
 def name_to_number(name):
+    """
+    Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.
+    
+    The conversion follows the standard mapping:
+    - rock -> 0
+    - Spock -> 1
+    - paper -> 2
+    - lizard -> 3
+    - scissors -> 4
+    
+    Args:
+        name (str): The name of the move to convert (case-sensitive).
+        
+    Returns:
+        int: The number corresponding to the input name (0-4).
+        
+    Side Effects:
+        Prints an error message if the input name is not valid.
+        
+    Examples:
+        >>> name_to_number("rock")
+        0
+        >>> name_to_number("Spock")
+        1
+    """
 
     if name == "rock":
         return 0
@@ -39,10 +64,30 @@ def name_to_number(name):
 #----------------------------------------------------------
         
 def number_to_name(number):
+    """
+    Convert a numeric input to its corresponding name in the Rock-Paper-Scissors-Lizard-Spock game.
     
-    # convert number to a name using if/elif/else
-    # don't forget to return the result!
-
+    Parameters:
+        number (int): A numeric value between 0 and 4 representing:
+                      0 - rock
+                      1 - Spock
+                      2 - paper
+                      3 - lizard
+                      4 - scissors
+    
+    Returns:
+        str: The name corresponding to the input number if valid
+             None (implicitly) if the number is invalid (prints error message)
+    
+    Prints:
+        Error message if the input number is not between 0 and 4
+    
+    Examples:
+        >>> number_to_name(0)
+        'rock'
+        >>> number_to_name(3)
+        'lizard'
+    """
     if number == 0:
         return "rock"
     elif number == 1:
@@ -55,7 +100,6 @@ def number_to_name(number):
         return "scissors" 
     else:
         print "Error: Not a valid number" 
-    
     
 #----------------------------------------------------------    
 #----------------------------------------------------------    
