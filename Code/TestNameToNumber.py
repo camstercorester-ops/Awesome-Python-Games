@@ -1,6 +1,7 @@
 import unittest
 from Code.Rock_Paper_Scissors_Spock_Lizard import name_to_number
 
+
 class TestNameToNumber(unittest.TestCase):
     def test_valid_moves(self):
         # Test all valid moves
