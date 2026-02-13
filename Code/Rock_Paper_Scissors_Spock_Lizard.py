@@ -69,26 +69,18 @@ def _validate_choice(choice: str) -> None:
 def _determine_winner(diff: int) -> str:
     """
     Determine the game outcome based on the modular difference.
-    
-    Uses the mathematical difference between player and computer moves
-    to determine who wins according to the game rules.
-    
+
     Args:
         diff (int): The modular difference (comp_number - player_number) % 5
-        
+
     Returns:
-        str: A string indicating whether the computer wins, player wins, or it's a tie
-        
-    Algorithm:
-        - diff in {1, 2}: Computer wins (computer's move beats player's move)
-        - diff == 0: Tie game (same moves selected)
-        - Otherwise: Player wins (player's move beats computer's move)
+        str: "Computer Wins", "Player Wins", or "Player and computer tie!"
     """
-    if diff in WINNING_DIFFS:
-        return "Computer Wins"
-    if diff == TIE_DIFF:
-        return "Player and computer tie!"
-    return "Player Wins"
+    return (
+        "Computer Wins" if diff in WINNING_DIFFS else
+        "Player and computer tie!" if diff == TIE_DIFF else
+        "Player Wins"
+    )
 
 
 def name_to_number(name: str) -> int:
