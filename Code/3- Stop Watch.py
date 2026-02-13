@@ -11,6 +11,7 @@
 # =============================================================================
 
 import tkinter as tk
+from tkinter import ttk
 from typing import Tuple
 import threading
 import time
@@ -151,6 +152,9 @@ def refresh_display() -> None:
     canvas.itemconfig(time_display, text=time_text)
     canvas.itemconfig(score_display, text=score_text)
     canvas.itemconfig(accuracy_display, text=acc_text, fill=color)
+    # Update attempts progress bar
+    attempts_progress["value"] = _total_attempts
+    attempts_label.config(text=f"Attempts: {_total_attempts}/{_MAX_ATTEMPTS}")
 
 
 def show_accuracy_popup() -> None:
@@ -180,30 +184,34 @@ root.resizable(False, False)
 root.attributes("-topmost", True)
 root.protocol("WM_DELETE_WINDOW", root.quit)
 
-canvas = tk.Canvas(root, width=300, height=200, bg="white")
+# Main frame to hold canvas and controls
+main_frame = ttk.Frame(root)
+main_frame.pack(padx=10, pady=10)
+
+canvas = tk.Canvas(main_frame, width=400, height=200, bg="white", relief="ridge", bd=2)
 canvas.pack()
 
 time_display = canvas.create_text(
-    75, 100,
+    200, 100,
     text=format_time(0),
     fill="Green",
-    font=("Helvetica", 40),
-    anchor="w"
+    font=("Helvetica", 48, "bold"),
+    anchor="center"
 )
 
 score_display = canvas.create_text(
-    270, 20,
+    350, 30,
     text=get_score_text(),
     fill="Red",
-    font=("Helvetica", 20),
+    font=("Helvetica", 24),
     anchor="ne"
 )
 
 accuracy_display = canvas.create_text(
-    270, 50,
+    350, 60,
     text="0.0%",
     fill="gray",
-    font=("Helvetica", 16),
+    font=("Helvetica", 18),
     anchor="ne"
 )
 
@@ -238,17 +246,32 @@ stopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})(
 #  7. Buttons & Event Binding
 # =============================================================================
 
-button_frame = tk.Frame(root)
+# Controls frame
+controls_frame = ttk.Frame(main_frame)
+controls_frame.pack(fill="x", pady=(10, 0))
+
+# Attempts progress bar and label
+attempts_frame = ttk.Frame(controls_frame)
+attempts_frame.pack(fill="x", pady=(0, 10))
+
+attempts_label = ttk.Label(attempts_frame, text=f"Attempts: 0/{_MAX_ATTEMPTS}", font=("Helvetica", 14))
+attempts_label.pack(side="left")
+
+attempts_progress = ttk.Progressbar(attempts_frame, maximum=_MAX_ATTEMPTS, length=200)
+attempts_progress.pack(side="right", padx=(10, 0))
+
+# Buttons frame
+button_frame = ttk.Frame(controls_frame)
 button_frame.pack()
 
-start_button = tk.Button(button_frame, text="Start", command=start_timer, width=10, takefocus=True)
-start_button.pack(side="left", padx=5, pady=5)
+start_button = ttk.Button(button_frame, text="Start", command=start_timer, width=12)
+start_button.pack(side="left", padx=5)
 
-stop_button = tk.Button(button_frame, text="Stop", command=stop_timer, width=10, takefocus=True)
-stop_button.pack(side="left", padx=5, pady=5)
+stop_button = ttk.Button(button_frame, text="Stop", command=stop_timer, width=12)
+stop_button.pack(side="left", padx=5)
 
-reset_button = tk.Button(button_frame, text="Reset", command=reset_timer, width=10, takefocus=True)
-reset_button.pack(side="left", padx=5, pady=5)
+reset_button = ttk.Button(button_frame, text="Reset", command=reset_timer, width=12)
+reset_button.pack(side="left", padx=5)
 
 # =============================================================================
 #  8. Keyboard shortcuts

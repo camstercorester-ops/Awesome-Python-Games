@@ -35,6 +35,14 @@
         "documentation": {}
     },
     {
+        "label": "ttk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
         "label": "Tuple",
         "importPath": "typing",
         "description": "typing",
@@ -582,7 +590,16 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "root = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)\n# Set window on top and remove full-screen to reduce attack surface\nroot.attributes(\"-topmost\", True)\nroot.protocol(\"WM_DELETE_WINDOW\", root.quit)\ncanvas = tk.Canvas(root, width=300, height=200, bg=\"white\")\ncanvas.pack()\ntime_display = canvas.create_text(\n    75, 100,",
+        "peekOfCode": "root = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)\n# Set window on top and remove full-screen to reduce attack surface\nroot.attributes(\"-topmost\", True)\nroot.protocol(\"WM_DELETE_WINDOW\", root.quit)\n# Main frame to hold canvas and controls\nmain_frame = ttk.Frame(root)\nmain_frame.pack(padx=10, pady=10)\ncanvas = tk.Canvas(main_frame, width=400, height=200, bg=\"white\", relief=\"ridge\", bd=2)",
+        "detail": "Code.3- Stop Watch",
+        "documentation": {}
+    },
+    {
+        "label": "main_frame",
+        "kind": 5,
+        "importPath": "Code.3- Stop Watch",
+        "description": "Code.3- Stop Watch",
+        "peekOfCode": "main_frame = ttk.Frame(root)\nmain_frame.pack(padx=10, pady=10)\ncanvas = tk.Canvas(main_frame, width=400, height=200, bg=\"white\", relief=\"ridge\", bd=2)\ncanvas.pack()\ntime_display = canvas.create_text(\n    200, 100,\n    text=format_time(0),\n    fill=\"Green\",\n    font=(\"Helvetica\", 48, \"bold\"),\n    anchor=\"center\"",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -591,7 +608,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "canvas = tk.Canvas(root, width=300, height=200, bg=\"white\")\ncanvas.pack()\ntime_display = canvas.create_text(\n    75, 100,\n    text=format_time(0),\n    fill=\"Green\",\n    font=(\"Helvetica\", 40),\n    anchor=\"w\"\n)\nscore_display = canvas.create_text(",
+        "peekOfCode": "canvas = tk.Canvas(main_frame, width=400, height=200, bg=\"white\", relief=\"ridge\", bd=2)\ncanvas.pack()\ntime_display = canvas.create_text(\n    200, 100,\n    text=format_time(0),\n    fill=\"Green\",\n    font=(\"Helvetica\", 48, \"bold\"),\n    anchor=\"center\"\n)\nscore_display = canvas.create_text(",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -600,7 +617,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "time_display = canvas.create_text(\n    75, 100,\n    text=format_time(0),\n    fill=\"Green\",\n    font=(\"Helvetica\", 40),\n    anchor=\"w\"\n)\nscore_display = canvas.create_text(\n    270, 20,\n    text=get_score_text(),",
+        "peekOfCode": "time_display = canvas.create_text(\n    200, 100,\n    text=format_time(0),\n    fill=\"Green\",\n    font=(\"Helvetica\", 48, \"bold\"),\n    anchor=\"center\"\n)\nscore_display = canvas.create_text(\n    350, 30,\n    text=get_score_text(),",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -609,7 +626,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "score_display = canvas.create_text(\n    270, 20,\n    text=get_score_text(),\n    fill=\"Red\",\n    font=(\"Helvetica\", 20),\n    anchor=\"ne\"\n)\naccuracy_display = canvas.create_text(\n    270, 50,\n    text=\"0.0%\",",
+        "peekOfCode": "score_display = canvas.create_text(\n    350, 30,\n    text=get_score_text(),\n    fill=\"Red\",\n    font=(\"Helvetica\", 24),\n    anchor=\"ne\"\n)\naccuracy_display = canvas.create_text(\n    350, 60,\n    text=\"0.0%\",",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -618,7 +635,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "accuracy_display = canvas.create_text(\n    270, 50,\n    text=\"0.0%\",\n    fill=\"gray\",\n    font=(\"Helvetica\", 16),\n    anchor=\"ne\"\n)\n# =============================================================================\n#  6. Timer Implementation using tkinter's after() loop\n# =============================================================================",
+        "peekOfCode": "accuracy_display = canvas.create_text(\n    350, 60,\n    text=\"0.0%\",\n    fill=\"gray\",\n    font=(\"Helvetica\", 18),\n    anchor=\"ne\"\n)\n# =============================================================================\n#  6. Timer Implementation using tkinter's after() loop\n# =============================================================================",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -636,7 +653,43 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "stopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n# =============================================================================\n#  7. Buttons & Event Binding\n# =============================================================================\nbutton_frame = tk.Frame(root)\nbutton_frame.pack()\nstart_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10, takefocus=True)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10, takefocus=True)\nstop_button.pack(side=\"left\", padx=5, pady=5)",
+        "peekOfCode": "stopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n# =============================================================================\n#  7. Buttons & Event Binding\n# =============================================================================\n# Controls frame\ncontrols_frame = ttk.Frame(main_frame)\ncontrols_frame.pack(fill=\"x\", pady=(10, 0))\n# Attempts progress bar and label\nattempts_frame = ttk.Frame(controls_frame)\nattempts_frame.pack(fill=\"x\", pady=(0, 10))",
+        "detail": "Code.3- Stop Watch",
+        "documentation": {}
+    },
+    {
+        "label": "controls_frame",
+        "kind": 5,
+        "importPath": "Code.3- Stop Watch",
+        "description": "Code.3- Stop Watch",
+        "peekOfCode": "controls_frame = ttk.Frame(main_frame)\ncontrols_frame.pack(fill=\"x\", pady=(10, 0))\n# Attempts progress bar and label\nattempts_frame = ttk.Frame(controls_frame)\nattempts_frame.pack(fill=\"x\", pady=(0, 10))\nattempts_label = ttk.Label(attempts_frame, text=f\"Attempts: 0/{_MAX_ATTEMPTS}\", font=(\"Helvetica\", 14))\nattempts_label.pack(side=\"left\")\nattempts_progress = ttk.Progressbar(attempts_frame, maximum=_MAX_ATTEMPTS, length=200)\nattempts_progress.pack(side=\"right\", padx=(10, 0))\n# Buttons frame",
+        "detail": "Code.3- Stop Watch",
+        "documentation": {}
+    },
+    {
+        "label": "attempts_frame",
+        "kind": 5,
+        "importPath": "Code.3- Stop Watch",
+        "description": "Code.3- Stop Watch",
+        "peekOfCode": "attempts_frame = ttk.Frame(controls_frame)\nattempts_frame.pack(fill=\"x\", pady=(0, 10))\nattempts_label = ttk.Label(attempts_frame, text=f\"Attempts: 0/{_MAX_ATTEMPTS}\", font=(\"Helvetica\", 14))\nattempts_label.pack(side=\"left\")\nattempts_progress = ttk.Progressbar(attempts_frame, maximum=_MAX_ATTEMPTS, length=200)\nattempts_progress.pack(side=\"right\", padx=(10, 0))\n# Buttons frame\nbutton_frame = ttk.Frame(controls_frame)\nbutton_frame.pack()\nstart_button = ttk.Button(button_frame, text=\"Start\", command=start_timer, width=12)",
+        "detail": "Code.3- Stop Watch",
+        "documentation": {}
+    },
+    {
+        "label": "attempts_label",
+        "kind": 5,
+        "importPath": "Code.3- Stop Watch",
+        "description": "Code.3- Stop Watch",
+        "peekOfCode": "attempts_label = ttk.Label(attempts_frame, text=f\"Attempts: 0/{_MAX_ATTEMPTS}\", font=(\"Helvetica\", 14))\nattempts_label.pack(side=\"left\")\nattempts_progress = ttk.Progressbar(attempts_frame, maximum=_MAX_ATTEMPTS, length=200)\nattempts_progress.pack(side=\"right\", padx=(10, 0))\n# Buttons frame\nbutton_frame = ttk.Frame(controls_frame)\nbutton_frame.pack()\nstart_button = ttk.Button(button_frame, text=\"Start\", command=start_timer, width=12)\nstart_button.pack(side=\"left\", padx=5)\nstop_button = ttk.Button(button_frame, text=\"Stop\", command=stop_timer, width=12)",
+        "detail": "Code.3- Stop Watch",
+        "documentation": {}
+    },
+    {
+        "label": "attempts_progress",
+        "kind": 5,
+        "importPath": "Code.3- Stop Watch",
+        "description": "Code.3- Stop Watch",
+        "peekOfCode": "attempts_progress = ttk.Progressbar(attempts_frame, maximum=_MAX_ATTEMPTS, length=200)\nattempts_progress.pack(side=\"right\", padx=(10, 0))\n# Buttons frame\nbutton_frame = ttk.Frame(controls_frame)\nbutton_frame.pack()\nstart_button = ttk.Button(button_frame, text=\"Start\", command=start_timer, width=12)\nstart_button.pack(side=\"left\", padx=5)\nstop_button = ttk.Button(button_frame, text=\"Stop\", command=stop_timer, width=12)\nstop_button.pack(side=\"left\", padx=5)\nreset_button = ttk.Button(button_frame, text=\"Reset\", command=reset_timer, width=12)",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -645,7 +698,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "button_frame = tk.Frame(root)\nbutton_frame.pack()\nstart_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10, takefocus=True)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10, takefocus=True)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10, takefocus=True)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Keyboard shortcuts",
+        "peekOfCode": "button_frame = ttk.Frame(controls_frame)\nbutton_frame.pack()\nstart_button = ttk.Button(button_frame, text=\"Start\", command=start_timer, width=12)\nstart_button.pack(side=\"left\", padx=5)\nstop_button = ttk.Button(button_frame, text=\"Stop\", command=stop_timer, width=12)\nstop_button.pack(side=\"left\", padx=5)\nreset_button = ttk.Button(button_frame, text=\"Reset\", command=reset_timer, width=12)\nreset_button.pack(side=\"left\", padx=5)\n# =============================================================================\n#  8. Keyboard shortcuts",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -654,7 +707,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "start_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10, takefocus=True)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10, takefocus=True)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10, takefocus=True)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Keyboard shortcuts\n# =============================================================================\n# Use root.bind_all to ensure no widget overrides these bindings",
+        "peekOfCode": "start_button = ttk.Button(button_frame, text=\"Start\", command=start_timer, width=12)\nstart_button.pack(side=\"left\", padx=5)\nstop_button = ttk.Button(button_frame, text=\"Stop\", command=stop_timer, width=12)\nstop_button.pack(side=\"left\", padx=5)\nreset_button = ttk.Button(button_frame, text=\"Reset\", command=reset_timer, width=12)\nreset_button.pack(side=\"left\", padx=5)\n# =============================================================================\n#  8. Keyboard shortcuts\n# =============================================================================\n# Use root.bind_all to ensure no widget overrides these bindings",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -663,7 +716,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "stop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10, takefocus=True)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10, takefocus=True)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Keyboard shortcuts\n# =============================================================================\n# Use root.bind_all to ensure no widget overrides these bindings\nroot.bind_all(\"<space>\", lambda e: start_timer() if _timer_is_paused and _total_attempts < _MAX_ATTEMPTS else (stop_timer() if not _timer_is_paused else None))\nroot.bind_all(\"<r>\", lambda e: reset_timer())",
+        "peekOfCode": "stop_button = ttk.Button(button_frame, text=\"Stop\", command=stop_timer, width=12)\nstop_button.pack(side=\"left\", padx=5)\nreset_button = ttk.Button(button_frame, text=\"Reset\", command=reset_timer, width=12)\nreset_button.pack(side=\"left\", padx=5)\n# =============================================================================\n#  8. Keyboard shortcuts\n# =============================================================================\n# Use root.bind_all to ensure no widget overrides these bindings\nroot.bind_all(\"<space>\", lambda e: start_timer() if _timer_is_paused and _total_attempts < _MAX_ATTEMPTS else (stop_timer() if not _timer_is_paused else None))\nroot.bind_all(\"<r>\", lambda e: reset_timer())",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -672,7 +725,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "reset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10, takefocus=True)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Keyboard shortcuts\n# =============================================================================\n# Use root.bind_all to ensure no widget overrides these bindings\nroot.bind_all(\"<space>\", lambda e: start_timer() if _timer_is_paused and _total_attempts < _MAX_ATTEMPTS else (stop_timer() if not _timer_is_paused else None))\nroot.bind_all(\"<r>\", lambda e: reset_timer())\n# =============================================================================\n#  9. Run Application",
+        "peekOfCode": "reset_button = ttk.Button(button_frame, text=\"Reset\", command=reset_timer, width=12)\nreset_button.pack(side=\"left\", padx=5)\n# =============================================================================\n#  8. Keyboard shortcuts\n# =============================================================================\n# Use root.bind_all to ensure no widget overrides these bindings\nroot.bind_all(\"<space>\", lambda e: start_timer() if _timer_is_paused and _total_attempts < _MAX_ATTEMPTS else (stop_timer() if not _timer_is_paused else None))\nroot.bind_all(\"<r>\", lambda e: reset_timer())\n# =============================================================================\n#  9. Run Application",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
