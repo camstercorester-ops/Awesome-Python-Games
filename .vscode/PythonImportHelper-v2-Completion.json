@@ -85,11 +85,20 @@
         "documentation": {}
     },
     {
+        "label": "set_range",
+        "kind": 2,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "def set_range(new_range):\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global num_range\n    num_range = new_range\n    new_game()\ndef range100():\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000():\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
         "label": "range100",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def range100():\n    # button that changes the range to [0,100) and starts a new game \n    global num_range\n    num_range = 100\n    new_game()\ndef range1000():\n    # button that changes the range to [0,1000) and starts a new game     \n    global num_range\n    num_range = 1000\n    new_game()",
+        "peekOfCode": "def range100():\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000():\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset():\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess):",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -98,7 +107,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def range1000():\n    # button that changes the range to [0,1000) and starts a new game     \n    global num_range\n    num_range = 1000\n    new_game()\ndef reset():\n    new_game()\ndef input_guess(guess):\n    global remaining_guesses\n    guess = int(guess)",
+        "peekOfCode": "def range1000():\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset():\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess):\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -107,7 +116,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def reset():\n    new_game()\ndef input_guess(guess):\n    global remaining_guesses\n    guess = int(guess)\n    print \"Guess was\", guess\n    if guess < secret_number:\n        print \"Higher!\"\n    elif guess > secret_number:\n        print \"Lower!\"",
+        "peekOfCode": "def reset():\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess):\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:\n        guess = int(guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -116,7 +125,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def input_guess(guess):\n    global remaining_guesses\n    guess = int(guess)\n    print \"Guess was\", guess\n    if guess < secret_number:\n        print \"Higher!\"\n    elif guess > secret_number:\n        print \"Lower!\"\n    else:\n        print \"Correct!\"",
+        "peekOfCode": "def input_guess(guess):\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:\n        guess = int(guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    print(f\"Guess was {guess}\")\n    if guess < secret_number:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

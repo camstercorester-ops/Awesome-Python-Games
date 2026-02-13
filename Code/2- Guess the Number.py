@@ -37,49 +37,50 @@ def new_game():
 #------------------------------------------
 # define event handlers for control panel
 
-def range100():
-    # button that changes the range to [0,100) and starts a new game 
+def set_range(new_range):
+    """Set the number range and start a new game."""
+    global num_range
+    num_range = new_range
+    new_game()
 
-    global num_range
-    num_range = 100
-    new_game()
-    
-  
+def range100():
+    """Button that changes the range to [0,100) and starts a new game."""
+    set_range(100)
+
 def range1000():
-    # button that changes the range to [0,1000) and starts a new game     
-    
-    global num_range
-    num_range = 1000
-    new_game()
-    
+    """Button that changes the range to [0,1000) and starts a new game."""
+    set_range(1000)
 
 def reset():
+    """Reset the current game."""
     new_game()
-    
-    
+
 def input_guess(guess):
-    
+    """Handle user input: compare guess to secret_number and give feedback."""
     global remaining_guesses
-    
-    guess = int(guess)
-    
-    print "Guess was", guess
-    
+
+    try:
+        guess = int(guess)
+    except ValueError:
+        print("Invalid input! Please enter an integer.")
+        return
+
+    print(f"Guess was {guess}")
+
     if guess < secret_number:
-        print "Higher!"
+        print("Higher!")
     elif guess > secret_number:
-        print "Lower!"
+        print("Lower!")
     else:
-        print "Correct!"
+        print("Correct!")
         new_game()
         return
-    
+
     remaining_guesses -= 1
-    print ""
-    print "Number of remaining guesses is :", remaining_guesses
-    
+    print(f"\nNumber of remaining guesses is: {remaining_guesses}")
+
     if remaining_guesses == 0:
-        print "You ran out of guesses :(  The secret number was", secret_number
+        print(f"You ran out of guesses :(  The secret number was {secret_number}")
         new_game()
 
 #------------------------------------------
