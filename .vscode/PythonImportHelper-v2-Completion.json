@@ -76,56 +76,56 @@
         "documentation": {}
     },
     {
-        "label": "new_game",
+        "label": "start_new_game",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses\n    secret_number = random.randrange(num_range)\n    remaining_guesses = (num_range - 1).bit_length()\n    print(\"\\n\".join([",
+        "peekOfCode": "def start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts\n    secret_number = random.randrange(upper_bound)\n    remaining_attempts = (upper_bound - 1).bit_length()\n    print(\"\\n\".join([",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "set_range",
+        "label": "set_game_range",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def set_range(new_range: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global num_range\n    num_range = new_range\n    new_game()\ndef range100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"",
+        "peekOfCode": "def set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    upper_bound = new_upper_bound\n    start_new_game()\ndef set_range_to_100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_game_range(100)\ndef set_range_to_1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "range100",
+        "label": "set_range_to_100",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def range100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:",
+        "peekOfCode": "def set_range_to_100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_game_range(100)\ndef set_range_to_1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_game_range(1000)\ndef reset_game() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    start_new_game()\ndef process_player_guess(player_guess: str) -> None:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "range1000",
+        "label": "set_range_to_1000",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def range1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:",
+        "peekOfCode": "def set_range_to_1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_game_range(1000)\ndef reset_game() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    start_new_game()\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    try:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "reset",
+        "label": "reset_game",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def reset() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:\n        guess_int = int(guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")",
+        "peekOfCode": "def reset_game() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    start_new_game()\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    try:\n        guessed_number = int(player_guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "input_guess",
+        "label": "process_player_guess",
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:\n        guess_int = int(guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    print(f\"Guess was {guess_int}\")\n    if guess_int < secret_number:",
+        "peekOfCode": "def process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    try:\n        guessed_number = int(player_guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    print(f\"Guess was {guessed_number}\")\n    if guessed_number < secret_number:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -134,43 +134,43 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "secret_number = 0\nnum_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).",
+        "peekOfCode": "secret_number = 0\nupper_bound = 100\nremaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "num_range",
+        "label": "upper_bound",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "num_range = 100\nremaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"",
+        "peekOfCode": "upper_bound = 100\nremaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "remaining_guesses",
+        "label": "remaining_attempts",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "remaining_guesses = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, num_range) and\n    set remaining_guesses to the optimal number of attempts\n    (ceiling of log2(num_range)).\n    \"\"\"\n    global secret_number, remaining_guesses",
+        "peekOfCode": "remaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "frame",
+        "label": "game_frame",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "frame = simplegui.create_frame(\"Guess the Number\", 300, 200)\n# Add control buttons with consistent width\nBTN_WIDTH = 150\nframe.add_button(\"Range: 0-99\", range100, BTN_WIDTH)\nframe.add_button(\"Range: 0-999\", range1000, BTN_WIDTH)\nframe.add_button(\"New Game\", reset, BTN_WIDTH)\n# Add input field for guesses\nframe.add_input(\"Your guess:\", input_guess, BTN_WIDTH)\n# Start the first game\nnew_game()",
+        "peekOfCode": "game_frame = simplegui.create_frame(\"Guess the Number\", 300, 200)\n# Add control buttons with consistent width\nBUTTON_WIDTH = 150\ngame_frame.add_button(\"Range: 0-99\", set_range_to_100, BUTTON_WIDTH)\ngame_frame.add_button(\"Range: 0-999\", set_range_to_1000, BUTTON_WIDTH)\ngame_frame.add_button(\"New Game\", reset_game, BUTTON_WIDTH)\n# Add input field for guesses\ngame_frame.add_input(\"Your guess:\", process_player_guess, BUTTON_WIDTH)\n# Start the first game\nstart_new_game()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "BTN_WIDTH",
+        "label": "BUTTON_WIDTH",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "BTN_WIDTH = 150\nframe.add_button(\"Range: 0-99\", range100, BTN_WIDTH)\nframe.add_button(\"Range: 0-999\", range1000, BTN_WIDTH)\nframe.add_button(\"New Game\", reset, BTN_WIDTH)\n# Add input field for guesses\nframe.add_input(\"Your guess:\", input_guess, BTN_WIDTH)\n# Start the first game\nnew_game()\n# Start the GUI event loop\nframe.start()",
+        "peekOfCode": "BUTTON_WIDTH = 150\ngame_frame.add_button(\"Range: 0-99\", set_range_to_100, BUTTON_WIDTH)\ngame_frame.add_button(\"Range: 0-999\", set_range_to_1000, BUTTON_WIDTH)\ngame_frame.add_button(\"New Game\", reset_game, BUTTON_WIDTH)\n# Add input field for guesses\ngame_frame.add_input(\"Your guess:\", process_player_guess, BUTTON_WIDTH)\n# Start the first game\nstart_new_game()\n# Start the GUI event loop\ngame_frame.start()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

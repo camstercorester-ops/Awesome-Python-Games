@@ -10,94 +10,91 @@ import simplegui
 #------------------------------------------
 # declaring global variables
 secret_number = 0
-num_range = 100
-remaining_guesses = 0
-
+upper_bound = 100
+remaining_attempts = 0
 #------------------------------------------
 # helper function to start and restart the game
 
-def new_game() -> None:
+def start_new_game() -> None:
     """
-    Start a new game: pick a secret number in [0, num_range) and
-    set remaining_guesses to the optimal number of attempts
-    (ceiling of log2(num_range)).
+    Start a new game: pick a secret number in [0, upper_bound) and
+    set remaining_attempts to the optimal number of attempts
+    (ceiling of log2(upper_bound)).
     """
-    global secret_number, remaining_guesses
+    global secret_number, remaining_attempts
     
-    secret_number = random.randrange(num_range)
-    remaining_guesses = (num_range - 1).bit_length()
+    secret_number = random.randrange(upper_bound)
+    remaining_attempts = (upper_bound - 1).bit_length()
     
     print("\n".join([
         "-" * 40,
         "-" * 40,
-        f"New game. Range is from 0 to {num_range}",
-        f"Total Guesses: {remaining_guesses}"
+        f"New game. Range is from 0 to {upper_bound}",
+        f"Total Guesses: {remaining_attempts}"
     ]))
-    
 #------------------------------------------
 # define event handlers for control panel
 
-def set_range(new_range: int) -> None:
+def set_game_range(new_upper_bound: int) -> None:
     """Set the number range and start a new game."""
-    global num_range
-    num_range = new_range
-    new_game()
+    global upper_bound
+    upper_bound = new_upper_bound
+    start_new_game()
 
-def range100() -> None:
+def set_range_to_100() -> None:
     """Button that changes the range to [0,100) and starts a new game."""
-    set_range(100)
+    set_game_range(100)
 
-def range1000() -> None:
+def set_range_to_1000() -> None:
     """Button that changes the range to [0,1000) and starts a new game."""
-    set_range(1000)
+    set_game_range(1000)
 
-def reset() -> None:
+def reset_game() -> None:
     """Reset the current game."""
-    new_game()
+    start_new_game()
 
-def input_guess(guess: str) -> None:
+def process_player_guess(player_guess: str) -> None:
     """Handle user input: compare guess to secret_number and give feedback."""
-    global remaining_guesses
+    global remaining_attempts
 
     try:
-        guess_int = int(guess)
+        guessed_number = int(player_guess)
     except ValueError:
         print("Invalid input! Please enter an integer.")
         return
 
-    print(f"Guess was {guess_int}")
+    print(f"Guess was {guessed_number}")
 
-    if guess_int < secret_number:
+    if guessed_number < secret_number:
         print("Higher!")
-    elif guess_int > secret_number:
+    elif guessed_number > secret_number:
         print("Lower!")
     else:
         print("Correct! You win!")
-        new_game()
+        start_new_game()
         return
 
-    remaining_guesses -= 1
-    print(f"Remaining guesses: {remaining_guesses}")
+    remaining_attempts -= 1
+    print(f"Remaining guesses: {remaining_attempts}")
 
-    if remaining_guesses <= 0:
+    if remaining_attempts <= 0:
         print(f"You ran out of guesses. The secret number was {secret_number}.")
-        new_game()
-
+        start_new_game()
 #------------------------------------------
 # Create frame with a descriptive title and optimal size for UX
-frame = simplegui.create_frame("Guess the Number", 300, 200)
+game_frame = simplegui.create_frame("Guess the Number", 300, 200)
 
 # Add control buttons with consistent width
-BTN_WIDTH = 150
-frame.add_button("Range: 0-99", range100, BTN_WIDTH)
-frame.add_button("Range: 0-999", range1000, BTN_WIDTH)
-frame.add_button("New Game", reset, BTN_WIDTH)
+BUTTON_WIDTH = 150
+game_frame.add_button("Range: 0-99", set_range_to_100, BUTTON_WIDTH)
+game_frame.add_button("Range: 0-999", set_range_to_1000, BUTTON_WIDTH)
+game_frame.add_button("New Game", reset_game, BUTTON_WIDTH)
 
 # Add input field for guesses
-frame.add_input("Your guess:", input_guess, BTN_WIDTH)
+game_frame.add_input("Your guess:", process_player_guess, BUTTON_WIDTH)
 
 # Start the first game
-new_game()
+start_new_game()
 
 # Start the GUI event loop
-frame.start()
+game_frame.start()
