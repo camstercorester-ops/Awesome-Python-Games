@@ -161,7 +161,16 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "frame = simplegui.create_frame(\"Guess the Number Game\", 300, 250)\n# Register event handlers for control elements and start frame\nfor label, handler in ((\"Range is [0, 100)\", range100),\n                       (\"Range is [0, 1000)\", range1000),\n                       (\"New Game\", reset)):\n    frame.add_button(label, handler, 200)\nframe.add_input(\"Enter a guess\", input_guess, 200)\n#------------------------------------------\n# Initialize and start the first game\nnew_game()",
+        "peekOfCode": "frame = simplegui.create_frame(\"Guess the Number\", 300, 200)\n# Add control buttons with consistent width\nBTN_WIDTH = 150\nframe.add_button(\"Range: 0-99\", range100, BTN_WIDTH)\nframe.add_button(\"Range: 0-999\", range1000, BTN_WIDTH)\nframe.add_button(\"New Game\", reset, BTN_WIDTH)\n# Add input field for guesses\nframe.add_input(\"Your guess:\", input_guess, BTN_WIDTH)\n# Start the first game\nnew_game()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "BTN_WIDTH",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "BTN_WIDTH = 150\nframe.add_button(\"Range: 0-99\", range100, BTN_WIDTH)\nframe.add_button(\"Range: 0-999\", range1000, BTN_WIDTH)\nframe.add_button(\"New Game\", reset, BTN_WIDTH)\n# Add input field for guesses\nframe.add_input(\"Your guess:\", input_guess, BTN_WIDTH)\n# Start the first game\nnew_game()\n# Start the GUI event loop\nframe.start()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

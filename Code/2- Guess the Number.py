@@ -84,24 +84,20 @@ def input_guess(guess):
         new_game()
 
 #------------------------------------------
-        
-# Create frame with a more descriptive title and larger size for better UX
-frame = simplegui.create_frame("Guess the Number Game", 300, 250)
+# Create frame with a descriptive title and optimal size for UX
+frame = simplegui.create_frame("Guess the Number", 300, 200)
 
-# Register event handlers for control elements and start frame
-for label, handler in (("Range is [0, 100)", range100),
-                       ("Range is [0, 1000)", range1000),
-                       ("New Game", reset)):
-    frame.add_button(label, handler, 200)
+# Add control buttons with consistent width
+BTN_WIDTH = 150
+frame.add_button("Range: 0-99", range100, BTN_WIDTH)
+frame.add_button("Range: 0-999", range1000, BTN_WIDTH)
+frame.add_button("New Game", reset, BTN_WIDTH)
 
-frame.add_input("Enter a guess", input_guess, 200)
+# Add input field for guesses
+frame.add_input("Your guess:", input_guess, BTN_WIDTH)
 
-#------------------------------------------
-
-# Initialize and start the first game
+# Start the first game
 new_game()
 
-#------------------------------------------
 # Start the GUI event loop
 frame.start()
-#------------------------------------------
