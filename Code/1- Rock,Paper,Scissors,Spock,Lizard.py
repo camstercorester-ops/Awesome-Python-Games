@@ -17,6 +17,7 @@
 #----------------------------------------------------------
 
 import random
+from unicodedata import name
 import simplegui
 
 # helper functions
@@ -49,22 +50,20 @@ def name_to_number(name):
     """
     
     if not isinstance(name, str):
-        print("Error: Input must be a string")
-        return None
+        raise ValueError("Input must be a string")
         
-    if name == "rock":
-        return 0
-    elif name == "Spock":
-        return 1
-    elif name == "paper":
-        return 2
-    elif name == "lizard":
-        return 3
-    elif name == "scissors":
-        return 4
-    else:
-        print("Error: Not a valid name")
-        return None
+    conversion = {
+        "rock": 0,
+        "Spock": 1,
+        "paper": 2,
+        "lizard": 3,
+        "scissors": 4
+    }
+    
+    if name not in conversion:
+        raise ValueError(f"'{name}' is not a valid move. Valid moves are: {', '.join(conversion.keys())}")
+    
+    return conversion[name]
 
 #----------------------------------------------------------
 # Number to name conversion function
@@ -147,27 +146,33 @@ def rpsls(player_choice):
     ValueError: If player_choice is not one of the valid options
     """
     
-    print "------------"
-    print "------------"    
+    print("------------")
+    print("------------")    
     
-    print "Player chooses " + player_choice 
+    print("Player chooses " + player_choice)
     
-    player_number = name_to_number(player_choice)
+    try:
+        player_number = name_to_number(player_choice)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return
     
     comp_number = random.randrange(0,5)
     
     comp_choice = number_to_name(comp_number)
     
-    print "Computer chooses " + comp_choice 
+    print("Computer chooses ", comp_choice)
     
     diff = (comp_number - player_number) % 5
 
     if diff == 1 or diff == 2:
-        print "Computer Wins"
+        print("Computer Wins")
+    
     elif diff == 3 or diff == 4:
-        print "Player Wins"
+        print("Player Wins")
+    
     else:
-        print "Player and computer tie!"
+        print("Player and computer tie!")
  
 #----------------------------------------------------------
 # GUI setup section

@@ -9,6 +9,14 @@
         "documentation": {}
     },
     {
+        "label": "name",
+        "importPath": "unicodedata",
+        "description": "unicodedata",
+        "isExtraImport": true,
+        "detail": "unicodedata",
+        "documentation": {}
+    },
+    {
         "label": "simplegui",
         "kind": 6,
         "isExtraImport": true,
