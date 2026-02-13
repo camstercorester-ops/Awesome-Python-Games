@@ -80,7 +80,16 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts\n    secret_number = random.randrange(upper_bound)\n    # ceil(log2(upper_bound)) via bit_length is already optimal\n    remaining_attempts = (upper_bound - 1).bit_length()",
+        "peekOfCode": "def start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts, history\n    secret_number = random.randrange(upper_bound)\n    remaining_attempts = (upper_bound - 1).bit_length()\n    history = []  # reset guess history",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "update_status",
+        "kind": 2,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "def update_status():\n    \"\"\"Refresh the status label with current game info.\"\"\"\n    status = (f\"Range: 0-{upper_bound-1}  |  \"\n              f\"Guesses left: {remaining_attempts}  |  \"\n              f\"Wins: {total_wins}/{total_games}\")\n    if best_score[upper_bound] is not None:\n        status += f\"  |  Best: {best_score[upper_bound]}\"\n    status_label.set_text(status)\n#------------------------------------------\n# define event handlers for control panel",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -89,7 +98,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    if new_upper_bound not in _RANGES:   # fast membership check\n        return\n    upper_bound = new_upper_bound\n    start_new_game()\n# Use lambdas to avoid extra function calls\nset_range_to_100  = lambda: set_game_range(100)\nset_range_to_1000 = lambda: set_game_range(1000)",
+        "peekOfCode": "def set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    if new_upper_bound not in _RANGES:\n        return\n    upper_bound = new_upper_bound\n    start_new_game()\nset_range_to_100  = lambda: set_game_range(100)\nset_range_to_1000 = lambda: set_game_range(1000)\nreset_game        = start_new_game",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -98,7 +107,43 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    # Fast-path integer parsing\n    if not player_guess.isdigit():\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    guessed_number = int(player_guess)\n    print(f\"Guess was {guessed_number}\")\n    # Single comparison chain",
+        "peekOfCode": "def process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts, total_games, total_wins, best_score\n    if not player_guess.isdigit():\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    guessed_number = int(player_guess)\n    if guessed_number < 0 or guessed_number >= upper_bound:\n        print(f\"Out of range! Pick between 0 and {upper_bound-1}.\")\n        return",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "get_hint",
+        "kind": 2,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "def get_hint():\n    \"\"\"Reveal one bit of information: parity.\"\"\"\n    if secret_number % 2 == 0:\n        print(\"Hint: The secret number is even.\")\n    else:\n        print(\"Hint: The secret number is odd.\")\n    hint_button.set_enabled(False)\n#------------------------------------------\n# Build UI\nframe = simplegui.create_frame(\"Guess the Number\", 400, 280)",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "update_history",
+        "kind": 2,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "def update_history():\n    if history:\n        history_label.set_text(\"Recent guesses: \" + \", \".join(map(str, history[-5:])))\n    else:\n        history_label.set_text(\"Recent guesses: None\")\nold_process = process_player_guess\ndef process_player_guess_wrap(g):\n    old_process(g)\n    update_history()\n    update_status()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "process_player_guess_wrap",
+        "kind": 2,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "def process_player_guess_wrap(g):\n    old_process(g)\n    update_history()\n    update_status()\nprocess_player_guess = process_player_guess_wrap\nold_start = start_new_game\ndef start_new_game_wrap():\n    old_start()\n    update_status()\n    hint_button.set_enabled(True)",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "start_new_game_wrap",
+        "kind": 2,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "def start_new_game_wrap():\n    old_start()\n    update_status()\n    hint_button.set_enabled(True)\n    update_history()\nstart_new_game = start_new_game_wrap\nstart_new_game()\nframe.start()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -107,7 +152,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "secret_number = 0\nupper_bound = 100\nremaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).",
+        "peekOfCode": "secret_number = 0\nupper_bound = 100\nremaining_attempts = 0\nbest_score = {100: None, 1000: None}  # track best scores per range\ntotal_games = 0\ntotal_wins = 0\nhistory = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -116,7 +161,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "upper_bound = 100\nremaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"",
+        "peekOfCode": "upper_bound = 100\nremaining_attempts = 0\nbest_score = {100: None, 1000: None}  # track best scores per range\ntotal_games = 0\ntotal_wins = 0\nhistory = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -125,7 +170,43 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "remaining_attempts = 0\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts",
+        "peekOfCode": "remaining_attempts = 0\nbest_score = {100: None, 1000: None}  # track best scores per range\ntotal_games = 0\ntotal_wins = 0\nhistory = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "best_score",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "best_score = {100: None, 1000: None}  # track best scores per range\ntotal_games = 0\ntotal_wins = 0\nhistory = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "total_games",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "total_games = 0\ntotal_wins = 0\nhistory = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "total_wins",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "total_wins = 0\nhistory = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "history",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "history = []  # store last few guesses for hints\n#------------------------------------------\n# helper function to start and restart the game\ndef start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts, history",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -134,7 +215,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "_RANGES = {100, 1000}\ndef set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    if new_upper_bound not in _RANGES:   # fast membership check\n        return\n    upper_bound = new_upper_bound\n    start_new_game()\n# Use lambdas to avoid extra function calls\nset_range_to_100  = lambda: set_game_range(100)",
+        "peekOfCode": "_RANGES = {100, 1000}\ndef set_game_range(new_upper_bound: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global upper_bound\n    if new_upper_bound not in _RANGES:\n        return\n    upper_bound = new_upper_bound\n    start_new_game()\nset_range_to_100  = lambda: set_game_range(100)\nset_range_to_1000 = lambda: set_game_range(1000)",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -143,7 +224,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "set_range_to_1000 = lambda: set_game_range(1000)\nreset_game        = start_new_game\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts\n    # Fast-path integer parsing\n    if not player_guess.isdigit():\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    guessed_number = int(player_guess)",
+        "peekOfCode": "set_range_to_1000 = lambda: set_game_range(1000)\nreset_game        = start_new_game\ndef process_player_guess(player_guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_attempts, total_games, total_wins, best_score\n    if not player_guess.isdigit():\n        print(\"Invalid input! Please enter an integer.\")\n        return\n    guessed_number = int(player_guess)\n    if guessed_number < 0 or guessed_number >= upper_bound:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -152,25 +233,79 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "frame = simplegui.create_frame(\"Guess the Number\", 300, 200)\nW = 150\nadd = frame.add_button, frame.add_input\nadd[0](\"Range: 0-99\", set_range_to_100, W)\nadd[0](\"Range: 0-999\", set_range_to_1000, W)\nadd[0](\"New Game\", reset_game, W)\nadd[1](\"Your guess:\", process_player_guess, W)\nstart_new_game()\nframe.start()",
+        "peekOfCode": "frame = simplegui.create_frame(\"Guess the Number\", 400, 280)\nframe.set_canvas_background(\"#f0f0f8\")\n# Status bar\nstatus_label = frame.add_label(\"\", 380)\nstatus_label.set_text(\"Loading...\")\n# Spacer\nframe.add_label(\"\", 380)\n# Range buttons\nframe.add_button(\"Range: 0-99\", set_range_to_100, 150)\nframe.add_button(\"Range: 0-999\", set_range_to_1000, 150)",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "W",
+        "label": "status_label",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "W = 150\nadd = frame.add_button, frame.add_input\nadd[0](\"Range: 0-99\", set_range_to_100, W)\nadd[0](\"Range: 0-999\", set_range_to_1000, W)\nadd[0](\"New Game\", reset_game, W)\nadd[1](\"Your guess:\", process_player_guess, W)\nstart_new_game()\nframe.start()",
+        "peekOfCode": "status_label = frame.add_label(\"\", 380)\nstatus_label.set_text(\"Loading...\")\n# Spacer\nframe.add_label(\"\", 380)\n# Range buttons\nframe.add_button(\"Range: 0-99\", set_range_to_100, 150)\nframe.add_button(\"Range: 0-999\", set_range_to_1000, 150)\n# Spacer\nframe.add_label(\"\", 380)\n# Input with label",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
     {
-        "label": "add",
+        "label": "guess_input",
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "add = frame.add_button, frame.add_input\nadd[0](\"Range: 0-99\", set_range_to_100, W)\nadd[0](\"Range: 0-999\", set_range_to_1000, W)\nadd[0](\"New Game\", reset_game, W)\nadd[1](\"Your guess:\", process_player_guess, W)\nstart_new_game()\nframe.start()",
+        "peekOfCode": "guess_input = frame.add_input(\"\", process_player_guess, 380)\n# Spacer\nframe.add_label(\"\", 380)\n# Action buttons\nhint_button = frame.add_button(\"Get a Hint (once/game)\", get_hint, 150)\nframe.add_button(\"New Game\", reset_game, 150)\n# Spacer\nframe.add_label(\"\", 380)\n# History box\nhistory_label = frame.add_label(\"Recent guesses: None\", 380)",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "hint_button",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "hint_button = frame.add_button(\"Get a Hint (once/game)\", get_hint, 150)\nframe.add_button(\"New Game\", reset_game, 150)\n# Spacer\nframe.add_label(\"\", 380)\n# History box\nhistory_label = frame.add_label(\"Recent guesses: None\", 380)\ndef update_history():\n    if history:\n        history_label.set_text(\"Recent guesses: \" + \", \".join(map(str, history[-5:])))\n    else:",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "history_label",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "history_label = frame.add_label(\"Recent guesses: None\", 380)\ndef update_history():\n    if history:\n        history_label.set_text(\"Recent guesses: \" + \", \".join(map(str, history[-5:])))\n    else:\n        history_label.set_text(\"Recent guesses: None\")\nold_process = process_player_guess\ndef process_player_guess_wrap(g):\n    old_process(g)\n    update_history()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "old_process",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "old_process = process_player_guess\ndef process_player_guess_wrap(g):\n    old_process(g)\n    update_history()\n    update_status()\nprocess_player_guess = process_player_guess_wrap\nold_start = start_new_game\ndef start_new_game_wrap():\n    old_start()\n    update_status()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "process_player_guess",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "process_player_guess = process_player_guess_wrap\nold_start = start_new_game\ndef start_new_game_wrap():\n    old_start()\n    update_status()\n    hint_button.set_enabled(True)\n    update_history()\nstart_new_game = start_new_game_wrap\nstart_new_game()\nframe.start()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "old_start",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "old_start = start_new_game\ndef start_new_game_wrap():\n    old_start()\n    update_status()\n    hint_button.set_enabled(True)\n    update_history()\nstart_new_game = start_new_game_wrap\nstart_new_game()\nframe.start()",
+        "detail": "Code.2- Guess the Number",
+        "documentation": {}
+    },
+    {
+        "label": "start_new_game",
+        "kind": 5,
+        "importPath": "Code.2- Guess the Number",
+        "description": "Code.2- Guess the Number",
+        "peekOfCode": "start_new_game = start_new_game_wrap\nstart_new_game()\nframe.start()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -1554,37 +1689,37 @@
     {
         "label": "Move",
         "kind": 6,
-        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "importPath": "RPS.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "peekOfCode": "class Move(IntEnum):\n    \"\"\"Strongly-typed moves with built-in conversion.\"\"\"\n    ROCK = 0\n    SPOCK = 1\n    PAPER = 2\n    LIZARD = 3\n    SCISSORS = 4\n    _NAME_TO_MOVE: Final[dict[str, \"Move\"]] = {name: move for name, move in ((m.name.upper(), m) for m in Move)}\n    _RESULT_CACHE: Final[Tuple[Tuple[int, ...], ...]] = tuple(\n        tuple(1 if (m - o) % 5 in {1, 2} else (-1 if (m - o) % 5 in {3, 4} else 0) for o in range(5))",
-        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "detail": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
     {
         "label": "RPSLSGui",
         "kind": 6,
-        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "importPath": "RPS.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "peekOfCode": "class RPSLSGui:\n    \"\"\"Enhanced GUI with scoreboard, history, quick buttons, and status bar.\"\"\"\n    def __init__(self) -> None:\n        self.root = tk.Tk()\n        self.root.title(\"Rock-Paper-Scissors-Lizard-Spock\")\n        self.root.geometry(\"420x420\")\n        self.root.resizable(False, False)\n        self.root.eval(\"tk::PlaceWindow . center\")\n        # Persistent stats\n        self.stats = {\"wins\": 0, \"losses\": 0, \"ties\": 0}",
-        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "detail": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
     {
         "label": "play",
         "kind": 2,
-        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "importPath": "RPS.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "peekOfCode": "def play(player_move: Move) -> Tuple[Move, Move, str]:\n    \"\"\"Run one round and return (player, computer, result_text).\"\"\"\n    computer_move = Move(random.randrange(5))\n    outcome = player_move.beats(computer_move)\n    return player_move, computer_move, _RESULT_MAP[outcome + 1]\n# ------------------------------------------------------------------\n# CLI helper\n# ------------------------------------------------------------------\ndef rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:\n    \"\"\"CLI-friendly wrapper; prints result and returns data or None on error.\"\"\"",
-        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "detail": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
     {
         "label": "rpsls",
         "kind": 2,
-        "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "importPath": "RPS.Rock_Paper_Scissors_Spock_Lizard",
+        "description": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "peekOfCode": "def rpsls(player_choice: str) -> Tuple[Move, Move, str] | None:\n    \"\"\"CLI-friendly wrapper; prints result and returns data or None on error.\"\"\"\n    try:\n        player = Move.from_str(player_choice)\n    except ValueError as e:\n        print(f\"Error: {e}\")\n        return None\n    player_move, computer_move, result = play(player)\n    print(\"-\" * 20)\n    print(f\"Player chooses   : {player_move.name.lower()}\")",
-        "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
+        "detail": "RPS.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     }
 ]
