@@ -376,7 +376,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def format_time(tenths):\n    # one tenth of a second\n    tenths_digit = tenths % 10\n    # total seconds\n    total_seconds = tenths // 10\n    minutes, remaining_seconds = divmod(total_seconds, 60)\n    seconds_tens, seconds_ones = divmod(remaining_seconds, 10)\n    return f\"{minutes}:{seconds_tens}{seconds_ones}.{tenths_digit}\"\n#-------------------------------------------------    \n#-------------------------------------------------",
+        "peekOfCode": "def format_time(tenths: int) -> str:\n    \"\"\"\n    Convert time expressed in tenths of seconds to a formatted string A:BC.D.\n    Parameters\n    ----------\n    tenths : int\n        Total time elapsed in tenths of seconds.\n    Returns\n    -------\n    str",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -385,7 +385,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def start_timer():\n    global timer_is_paused\n    stopwatch_timer.start()\n    timer_is_paused = False\ndef stop_timer():\n    global timer_is_paused, total_attempts, successful_attempts\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        if elapsed_tenths % 10 == 0:\n            successful_attempts += 1",
+        "peekOfCode": "def start_timer() -> None:\n    \"\"\"Start the stopwatch timer and set the paused flag to False.\"\"\"\n    global timer_is_paused\n    stopwatch_timer.start()\n    timer_is_paused = False\ndef stop_timer() -> None:\n    \"\"\"\n    Stop the stopwatch timer if it is running.\n    Increment total attempts and, if stopped on a whole second,\n    increment successful attempts.",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -394,7 +394,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def stop_timer():\n    global timer_is_paused, total_attempts, successful_attempts\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        if elapsed_tenths % 10 == 0:\n            successful_attempts += 1\n        total_attempts += 1\n        timer_is_paused = True\ndef reset_timer():\n    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused",
+        "peekOfCode": "def stop_timer() -> None:\n    \"\"\"\n    Stop the stopwatch timer if it is running.\n    Increment total attempts and, if stopped on a whole second,\n    increment successful attempts.\n    \"\"\"\n    global timer_is_paused, total_attempts, successful_attempts\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        if elapsed_tenths % 10 == 0:",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -403,7 +403,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def reset_timer():\n    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused\n    elapsed_tenths = successful_attempts = total_attempts = 0\n    timer_is_paused = True\n    stopwatch_timer.stop()\n    refresh_display()\n# define event handler for timer with 0.1 sec interval\ndef increment_elapsed():\n    global elapsed_tenths\n    elapsed_tenths += 1",
+        "peekOfCode": "def reset_timer() -> None:\n    \"\"\"Reset all game state and stop the timer.\"\"\"\n    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused\n    elapsed_tenths = successful_attempts = total_attempts = 0\n    timer_is_paused = True\n    stopwatch_timer.stop()\n    refresh_display()\n# =============================================================================\n#  4. Timer & Display Handlers\n# =============================================================================",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -412,7 +412,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def increment_elapsed():\n    global elapsed_tenths\n    elapsed_tenths += 1\n    refresh_display()\n# define draw handler\ndef refresh_display():\n    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))\n    canvas.itemconfig(score_display, text=f\"{successful_attempts}/{total_attempts}\")\n#-------------------------------------------------    \n#-------------------------------------------------",
+        "peekOfCode": "def increment_elapsed() -> None:\n    \"\"\"Increment elapsed time by one tenth of a second and refresh display.\"\"\"\n    global elapsed_tenths\n    elapsed_tenths += 1\n    refresh_display()\ndef refresh_display() -> None:\n    \"\"\"Update the canvas text items for time and score.\"\"\"\n    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))\n    canvas.itemconfig(score_display, text=f\"{successful_attempts}/{total_attempts}\")\n# =============================================================================",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -421,7 +421,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def refresh_display():\n    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))\n    canvas.itemconfig(score_display, text=f\"{successful_attempts}/{total_attempts}\")\n#-------------------------------------------------    \n#-------------------------------------------------\n# create frame\nroot = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)\ncanvas = tk.Canvas(root, width=300, height=200, bg=\"white\")",
+        "peekOfCode": "def refresh_display() -> None:\n    \"\"\"Update the canvas text items for time and score.\"\"\"\n    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))\n    canvas.itemconfig(score_display, text=f\"{successful_attempts}/{total_attempts}\")\n# =============================================================================\n#  5. GUI Setup – Main Window & Canvas\n# =============================================================================\nroot = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -430,7 +430,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def timer_start():\n    global timer_id\n    if timer_id is None:\n        increment_elapsed()\n        timer_id = root.after(100, timer_start)\ndef timer_stop():\n    global timer_id\n    if timer_id is not None:\n        root.after_cancel(timer_id)\n        timer_id = None",
+        "peekOfCode": "def timer_start() -> None:\n    \"\"\"Start the after() loop that increments elapsed time every 100 ms.\"\"\"\n    global timer_id\n    if timer_id is None:\n        increment_elapsed()\n        timer_id = root.after(100, timer_start)\ndef timer_stop() -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global timer_id\n    if timer_id is not None:",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -439,7 +439,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def timer_stop():\n    global timer_id\n    if timer_id is not None:\n        root.after_cancel(timer_id)\n        timer_id = None\nstopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n#-------------------------------------------------    \n#-------------------------------------------------\n# register event handlers\nbutton_frame = tk.Frame(root)",
+        "peekOfCode": "def timer_stop() -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global timer_id\n    if timer_id is not None:\n        root.after_cancel(timer_id)\n        timer_id = None\n# Create a simple object with start/stop methods for consistent interface\nstopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n# =============================================================================\n#  7. Buttons & Event Binding",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -448,7 +448,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "elapsed_tenths = 0\ntotal_attempts = 0\nsuccessful_attempts = 0\ntimer_is_paused = True\n#-------------------------------------------------\n#-------------------------------------------------\n# define helper function format_time that converts time\n# in tenths of seconds into formatted string A:BC.D\ndef format_time(tenths):\n    # one tenth of a second",
+        "peekOfCode": "elapsed_tenths = 0        # time elapsed in tenths of seconds\ntotal_attempts = 0        # how many times the user pressed Stop\nsuccessful_attempts = 0   # how many stops landed on a whole second\ntimer_is_paused = True    # flag indicating if the timer is currently paused\n# =============================================================================\n#  2. Helper Functions\n# =============================================================================\ndef format_time(tenths: int) -> str:\n    \"\"\"\n    Convert time expressed in tenths of seconds to a formatted string A:BC.D.",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -457,7 +457,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "total_attempts = 0\nsuccessful_attempts = 0\ntimer_is_paused = True\n#-------------------------------------------------\n#-------------------------------------------------\n# define helper function format_time that converts time\n# in tenths of seconds into formatted string A:BC.D\ndef format_time(tenths):\n    # one tenth of a second\n    tenths_digit = tenths % 10",
+        "peekOfCode": "total_attempts = 0        # how many times the user pressed Stop\nsuccessful_attempts = 0   # how many stops landed on a whole second\ntimer_is_paused = True    # flag indicating if the timer is currently paused\n# =============================================================================\n#  2. Helper Functions\n# =============================================================================\ndef format_time(tenths: int) -> str:\n    \"\"\"\n    Convert time expressed in tenths of seconds to a formatted string A:BC.D.\n    Parameters",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -466,7 +466,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "successful_attempts = 0\ntimer_is_paused = True\n#-------------------------------------------------\n#-------------------------------------------------\n# define helper function format_time that converts time\n# in tenths of seconds into formatted string A:BC.D\ndef format_time(tenths):\n    # one tenth of a second\n    tenths_digit = tenths % 10\n    # total seconds",
+        "peekOfCode": "successful_attempts = 0   # how many stops landed on a whole second\ntimer_is_paused = True    # flag indicating if the timer is currently paused\n# =============================================================================\n#  2. Helper Functions\n# =============================================================================\ndef format_time(tenths: int) -> str:\n    \"\"\"\n    Convert time expressed in tenths of seconds to a formatted string A:BC.D.\n    Parameters\n    ----------",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -475,7 +475,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "timer_is_paused = True\n#-------------------------------------------------\n#-------------------------------------------------\n# define helper function format_time that converts time\n# in tenths of seconds into formatted string A:BC.D\ndef format_time(tenths):\n    # one tenth of a second\n    tenths_digit = tenths % 10\n    # total seconds\n    total_seconds = tenths // 10",
+        "peekOfCode": "timer_is_paused = True    # flag indicating if the timer is currently paused\n# =============================================================================\n#  2. Helper Functions\n# =============================================================================\ndef format_time(tenths: int) -> str:\n    \"\"\"\n    Convert time expressed in tenths of seconds to a formatted string A:BC.D.\n    Parameters\n    ----------\n    tenths : int",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -484,7 +484,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "root = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)\ncanvas = tk.Canvas(root, width=300, height=200, bg=\"white\")\ncanvas.pack()\ntime_display = canvas.create_text(75, 100, text=format_time(elapsed_tenths), fill=\"Green\",\n                               font=(\"Helvetica\", 40), anchor=\"w\")\nscore_display = canvas.create_text(270, 20, text=f\"{successful_attempts}/{total_attempts}\",\n                                fill=\"Red\", font=(\"Helvetica\", 20), anchor=\"ne\")\n# Timer using after loop",
+        "peekOfCode": "root = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)\ncanvas = tk.Canvas(root, width=300, height=200, bg=\"white\")\ncanvas.pack()\ntime_display = canvas.create_text(\n    75, 100,\n    text=format_time(elapsed_tenths),\n    fill=\"Green\",\n    font=(\"Helvetica\", 40),",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -493,7 +493,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "canvas = tk.Canvas(root, width=300, height=200, bg=\"white\")\ncanvas.pack()\ntime_display = canvas.create_text(75, 100, text=format_time(elapsed_tenths), fill=\"Green\",\n                               font=(\"Helvetica\", 40), anchor=\"w\")\nscore_display = canvas.create_text(270, 20, text=f\"{successful_attempts}/{total_attempts}\",\n                                fill=\"Red\", font=(\"Helvetica\", 20), anchor=\"ne\")\n# Timer using after loop\ntimer_id = None\ndef timer_start():\n    global timer_id",
+        "peekOfCode": "canvas = tk.Canvas(root, width=300, height=200, bg=\"white\")\ncanvas.pack()\ntime_display = canvas.create_text(\n    75, 100,\n    text=format_time(elapsed_tenths),\n    fill=\"Green\",\n    font=(\"Helvetica\", 40),\n    anchor=\"w\"\n)\nscore_display = canvas.create_text(",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -502,7 +502,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "time_display = canvas.create_text(75, 100, text=format_time(elapsed_tenths), fill=\"Green\",\n                               font=(\"Helvetica\", 40), anchor=\"w\")\nscore_display = canvas.create_text(270, 20, text=f\"{successful_attempts}/{total_attempts}\",\n                                fill=\"Red\", font=(\"Helvetica\", 20), anchor=\"ne\")\n# Timer using after loop\ntimer_id = None\ndef timer_start():\n    global timer_id\n    if timer_id is None:\n        increment_elapsed()",
+        "peekOfCode": "time_display = canvas.create_text(\n    75, 100,\n    text=format_time(elapsed_tenths),\n    fill=\"Green\",\n    font=(\"Helvetica\", 40),\n    anchor=\"w\"\n)\nscore_display = canvas.create_text(\n    270, 20,\n    text=f\"{successful_attempts}/{total_attempts}\",",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -511,7 +511,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "score_display = canvas.create_text(270, 20, text=f\"{successful_attempts}/{total_attempts}\",\n                                fill=\"Red\", font=(\"Helvetica\", 20), anchor=\"ne\")\n# Timer using after loop\ntimer_id = None\ndef timer_start():\n    global timer_id\n    if timer_id is None:\n        increment_elapsed()\n        timer_id = root.after(100, timer_start)\ndef timer_stop():",
+        "peekOfCode": "score_display = canvas.create_text(\n    270, 20,\n    text=f\"{successful_attempts}/{total_attempts}\",\n    fill=\"Red\",\n    font=(\"Helvetica\", 20),\n    anchor=\"ne\"\n)\n# =============================================================================\n#  6. Timer Implementation using tkinter's after() loop\n# =============================================================================",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -520,7 +520,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "timer_id = None\ndef timer_start():\n    global timer_id\n    if timer_id is None:\n        increment_elapsed()\n        timer_id = root.after(100, timer_start)\ndef timer_stop():\n    global timer_id\n    if timer_id is not None:\n        root.after_cancel(timer_id)",
+        "peekOfCode": "timer_id = None  # Holds the after() ID to allow cancellation\ndef timer_start() -> None:\n    \"\"\"Start the after() loop that increments elapsed time every 100 ms.\"\"\"\n    global timer_id\n    if timer_id is None:\n        increment_elapsed()\n        timer_id = root.after(100, timer_start)\ndef timer_stop() -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global timer_id",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -529,7 +529,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "stopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n#-------------------------------------------------    \n#-------------------------------------------------\n# register event handlers\nbutton_frame = tk.Frame(root)\nbutton_frame.pack()\nstart_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)",
+        "peekOfCode": "stopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n# =============================================================================\n#  7. Buttons & Event Binding\n# =============================================================================\nbutton_frame = tk.Frame(root)\nbutton_frame.pack()\nstart_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -538,7 +538,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "button_frame = tk.Frame(root)\nbutton_frame.pack()\nstart_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n#-------------------------------------------------    \n#-------------------------------------------------",
+        "peekOfCode": "button_frame = tk.Frame(root)\nbutton_frame.pack()\nstart_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Run Application",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -547,7 +547,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "start_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n#-------------------------------------------------    \n#-------------------------------------------------\n# start frame\nroot.mainloop()",
+        "peekOfCode": "start_button = tk.Button(button_frame, text=\"Start\", command=start_timer, width=10)\nstart_button.pack(side=\"left\", padx=5, pady=5)\nstop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Run Application\n# =============================================================================\nroot.mainloop()",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -556,7 +556,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "stop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n#-------------------------------------------------    \n#-------------------------------------------------\n# start frame\nroot.mainloop()\n#-------------------------------------------------    \n#-------------------------------------------------",
+        "peekOfCode": "stop_button = tk.Button(button_frame, text=\"Stop\", command=stop_timer, width=10)\nstop_button.pack(side=\"left\", padx=5, pady=5)\nreset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Run Application\n# =============================================================================\nroot.mainloop()",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -565,7 +565,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "reset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n#-------------------------------------------------    \n#-------------------------------------------------\n# start frame\nroot.mainloop()\n#-------------------------------------------------    \n#-------------------------------------------------",
+        "peekOfCode": "reset_button = tk.Button(button_frame, text=\"Reset\", command=reset_timer, width=10)\nreset_button.pack(side=\"left\", padx=5, pady=5)\n# =============================================================================\n#  8. Run Application\n# =============================================================================\nroot.mainloop()",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
