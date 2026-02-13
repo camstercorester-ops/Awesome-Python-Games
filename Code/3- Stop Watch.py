@@ -1,13 +1,11 @@
 # template for "Stopwatch: The Game"
 
-
-
 #-------------------------------------------------
 #-------------------------------------------------
 
 # global state
 
-import simplegui
+import tkinter as tk
 
 
 # define global variables
@@ -19,7 +17,6 @@ timer_stopped = True
 
 #-------------------------------------------------
 #-------------------------------------------------
-
 
 # define helper function format that converts time
 # in tenths of seconds into formatted string A:BC.D
@@ -78,54 +75,81 @@ def reset():
     total_stops = 0
     timer_stopped = True
     timer.stop()
-
-
-#-------------------------------------------------    
-#-------------------------------------------------
+    update_display()
 
 
 # define event handler for timer with 0.1 sec interval
-
 def increment_ticks():
     global ticks
     ticks += 1
+    update_display()
 
 
 # define draw handler
+def update_display():
+    time_text = format(ticks)
+    score_text = f"{correct_stops}/{total_stops}"
+    canvas.itemconfig(time_item, text=time_text)
+    canvas.itemconfig(score_item, text=score_text)
 
-def draw(canvas):
-    canvas.draw_text(format(ticks), [75, 100], 40, "Green")
-    canvas.draw_text(str(correct_stops) + "/" + str(total_stops), [270,20], 20, "Red")
-  
 
 #-------------------------------------------------    
 #-------------------------------------------------
     
     
 # create frame
+root = tk.Tk()
+root.title("Stop Watch: The Game")
+root.resizable(False, False)
 
-frame = simplegui.create_frame("Stop Watch: The Game", 300, 200)
-timer = simplegui.create_timer(100, increment_ticks)
+canvas = tk.Canvas(root, width=300, height=200, bg="white")
+canvas.pack()
+
+time_item = canvas.create_text(75, 100, text=format(ticks), fill="Green",
+                               font=("Helvetica", 40), anchor="w")
+score_item = canvas.create_text(270, 20, text=f"{correct_stops}/{total_stops}",
+                                fill="Red", font=("Helvetica", 20), anchor="ne")
+
+# Timer using after loop
+timer_id = None
+
+def timer_start():
+    global timer_id
+    if timer_id is None:
+        increment_ticks()
+        timer_id = root.after(100, timer_start)
+
+def timer_stop():
+    global timer_id
+    if timer_id is not None:
+        root.after_cancel(timer_id)
+        timer_id = None
+
+timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()
 
 #-------------------------------------------------    
 #-------------------------------------------------
 
 
 # register event handlers
+button_frame = tk.Frame(root)
+button_frame.pack()
 
-frame.set_draw_handler(draw)
+start_btn = tk.Button(button_frame, text="Start", command=start, width=10)
+start_btn.pack(side="left", padx=5, pady=5)
 
-frame.add_button("Start", start, 100)
-frame.add_button("Stop", stop, 100)
-frame.add_button("Reset", reset, 100)
+stop_btn = tk.Button(button_frame, text="Stop", command=stop, width=10)
+stop_btn.pack(side="left", padx=5, pady=5)
+
+reset_btn = tk.Button(button_frame, text="Reset", command=reset, width=10)
+reset_btn.pack(side="left", padx=5, pady=5)
 
 
 #-------------------------------------------------    
 #-------------------------------------------------
 
 # start frame
-
-frame.start()
+root.mainloop()
 
 
 #-------------------------------------------------    
