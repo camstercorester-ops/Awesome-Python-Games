@@ -527,7 +527,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def timer_tick() -> None:\n    \"\"\"Callback that increments time and schedules the next tick.\"\"\"\n    increment_elapsed()\n    global _timer_id\n    if _timer_id is not None:  # Only reschedule if not stopped\n        _timer_id = root.after(100, timer_tick)\ndef timer_stop() -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global _timer_id\n    if _timer_id is not None:",
+        "peekOfCode": "def timer_tick() -> None:\n    \"\"\"Callback that increments time and schedules the next tick.\"\"\"\n    increment_elapsed()\n    global _timer_id\n    if _timer_id is not None:  # Only reschedule if not stopped\n        _timer_id = root.after(100, timer_tick)\ndef timer_stop(_: object = None) -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global _timer_id\n    if _timer_id is not None:",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -536,7 +536,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def timer_stop() -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global _timer_id\n    if _timer_id is not None:\n        root.after_cancel(_timer_id)\n        _timer_id = None\n# Create a simple object with start/stop methods for consistent interface\nstopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n# =============================================================================\n#  7. Buttons & Event Binding",
+        "peekOfCode": "def timer_stop(_: object = None) -> None:\n    \"\"\"Cancel the after() loop, effectively pausing the timer.\"\"\"\n    global _timer_id\n    if _timer_id is not None:\n        root.after_cancel(_timer_id)\n        _timer_id = None\n# Create a simple object with start/stop methods for consistent interface\nstopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})()\n# =============================================================================\n#  7. Buttons & Event Binding",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },

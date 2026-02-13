@@ -238,7 +238,7 @@ def timer_tick() -> None:
         _timer_id = root.after(100, timer_tick)
 
 
-def timer_stop() -> None:
+def timer_stop(_: object = None) -> None:
     """Cancel the after() loop, effectively pausing the timer."""
     global _timer_id
     if _timer_id is not None:
