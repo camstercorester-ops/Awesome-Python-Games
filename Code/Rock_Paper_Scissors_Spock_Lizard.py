@@ -86,45 +86,36 @@ def _determine_winner(diff: int) -> str:
 def name_to_number(name: str) -> int:
     """
     Convert a rock-paper-scissors-lizard-Spock name to its corresponding number.
-    
+
     The conversion follows the standard mapping:
     - rock -> 0
     - Spock -> 1
     - paper -> 2
     - lizard -> 3
     - scissors -> 4
-    
+
     Args:
         name (str): The name of the move to convert (case-insensitive).
-        
+
     Returns:
         int: The number corresponding to the input name (0-4).
-        
+
     Raises:
         ValueError: If input is not a string or not a valid move name.
-        
+
     Examples:
         >>> name_to_number("rock")
         0
         >>> name_to_number("Spock")
         1
     """
-    if not isinstance(name, str):
-        raise ValueError("Input must be a string")
-    
-    # Convert to lowercase for case-insensitive comparison
-    name_lower = name.lower()
-    
-    # Use dictionary.get() with default None for invalid moves
-    result = MOVE_TO_NUMBER.get(name_lower)
-    
-    if result is None:
+    try:
+        return MOVE_TO_NUMBER[name.lower()]
+    except (AttributeError, KeyError):
         raise ValueError(
             f"'{name}' is not a valid move. "
-            f"Valid moves are: {', '.join(MOVE_TO_NUMBER.keys())}"
-        )
-    
-    return result
+            f"Valid moves are: {', '.join(MOVE_TO_NUMBER)}"
+        ) from None
 
 #----------------------------------------------------------
 # Number to name conversion function
