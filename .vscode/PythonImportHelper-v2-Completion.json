@@ -456,7 +456,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def start_timer() -> None:\n    \"\"\"Start the stopwatch timer and set the paused flag to False.\"\"\"\n    global _timer_is_paused\n    with _state_lock:\n        if not _timer_is_paused:\n            return  # Prevent double-start\n        _timer_is_paused = False\n    stopwatch_timer.start()\ndef stop_timer() -> None:\n    \"\"\"",
+        "peekOfCode": "def start_timer() -> None:\n    \"\"\"Start the stopwatch timer and set the paused flag to False.\"\"\"\n    global _timer_is_paused\n    with _state_lock:\n        if not _timer_is_paused:\n            return  # Prevent double-start\n        _timer_is_paused = False\n    stopwatch_timer.start()\ndef stop_timer(*args) -> None:\n    \"\"\"",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -465,7 +465,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def stop_timer() -> None:\n    \"\"\"\n    Stop the stopwatch timer if it is running.\n    Increment total attempts and, if stopped on a whole second,\n    increment successful attempts.\n    \"\"\"\n    global _timer_is_paused, _total_attempts, _successful_attempts\n    with _state_lock:\n        if _timer_is_paused:\n            return  # Prevent stop when already paused",
+        "peekOfCode": "def stop_timer(*args) -> None:\n    \"\"\"\n    Stop the stopwatch timer if it is running.\n    Increment total attempts and, if stopped on a whole second,\n    increment successful attempts.\n    \"\"\"\n    global _timer_is_paused, _total_attempts, _successful_attempts\n    with _state_lock:\n        if _timer_is_paused:\n            return  # Prevent stop when already paused",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -474,7 +474,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def reset_timer() -> None:\n    \"\"\"Reset all game state and stop the timer.\"\"\"\n    reset_game_state()\n    stopwatch_timer.stop()\n    refresh_display()\n# =============================================================================\n#  4. Timer & Display Handlers\n# =============================================================================\ndef increment_elapsed() -> None:\n    \"\"\"Increment elapsed time by one tenth of a second and refresh display.\"\"\"",
+        "peekOfCode": "def reset_timer(*args) -> None:\n    \"\"\"Reset all game state and stop the timer.\"\"\"\n    reset_game_state()\n    stopwatch_timer.stop()\n    refresh_display()\n# =============================================================================\n#  4. Timer & Display Handlers\n# =============================================================================\ndef increment_elapsed() -> None:\n    \"\"\"Increment elapsed time by one tenth of a second and refresh display.\"\"\"",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },

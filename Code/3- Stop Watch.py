@@ -96,7 +96,7 @@ def start_timer() -> None:
     stopwatch_timer.start()
 
 
-def stop_timer() -> None:
+def stop_timer(*args) -> None:
     """
     Stop the stopwatch timer if it is running.
     Increment total attempts and, if stopped on a whole second,
@@ -115,7 +115,7 @@ def stop_timer() -> None:
     show_accuracy_popup()
 
 
-def reset_timer() -> None:
+def reset_timer(*args) -> None:
     """Reset all game state and stop the timer."""
     reset_game_state()
     stopwatch_timer.stop()
