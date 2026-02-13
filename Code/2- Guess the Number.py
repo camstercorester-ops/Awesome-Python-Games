@@ -108,7 +108,7 @@ frame.add_input("Enter a guess", input_guess, 200)
 new_game()
 
 #------------------------------------------
-# starting the frame
+# Start the GUI event loop
 frame.start()
 #------------------------------------------
 
