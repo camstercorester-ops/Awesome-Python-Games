@@ -12,6 +12,7 @@
 # 4 - scissors
 
 #----------------------------------------------------------
+# Helper functions section
 #----------------------------------------------------------
 #----------------------------------------------------------
 
@@ -61,6 +62,7 @@ def name_to_number(name):
         print "Error: Not a valid name" 
 
 #----------------------------------------------------------
+# Number to name conversion function
 #----------------------------------------------------------
         
 def number_to_name(number):
@@ -102,8 +104,8 @@ def number_to_name(number):
         print "Error: Not a valid number" 
     
 #----------------------------------------------------------    
+# Main game function
 #----------------------------------------------------------    
-
 
 def rpsls(player_choice):
     """
@@ -161,13 +163,12 @@ def rpsls(player_choice):
     else:
         print "Player and computer tie!"
  
-
 #----------------------------------------------------------
+# GUI setup section
 #----------------------------------------------------------
 #----------------------------------------------------------    
 #----------------------------------------------------------    
     
-	
 # Event Handlers
 
 def get_input(inp):
@@ -195,25 +196,17 @@ def get_input(inp):
 	else:
 		print "Error: Invalid Input"
 	
-	
-
-
 # Creating a Frame
-
 frame = simplegui.create_frame("Rock-paper-scissors-lizard-Spock",200,200)
 
 # Registering Handlers
-
 frame.add_input("Enter your choice: ", get_input,200)	
 	
-	
 # Starting the Frame
-
 frame.start()	
     
-
-	
 """	
+# Test cases section
 # test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE
 rpsls("rock")
 rpsls("Spock")
@@ -221,7 +214,3 @@ rpsls("paper")
 rpsls("lizard")
 rpsls("scissors")
 """
-
-# always remember to check your completed program against the grading rubric
-
-

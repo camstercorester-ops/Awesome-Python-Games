@@ -67,7 +67,7 @@
         "kind": 5,
         "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "frame = simplegui.create_frame(\"Rock-paper-scissors-lizard-Spock\",200,200)\n# Registering Handlers\nframe.add_input(\"Enter your choice: \", get_input,200)\t\n# Starting the Frame\nframe.start()\t\n\"\"\"\t\n# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE\nrpsls(\"rock\")\nrpsls(\"Spock\")\nrpsls(\"paper\")",
+        "peekOfCode": "frame = simplegui.create_frame(\"Rock-paper-scissors-lizard-Spock\",200,200)\n# Registering Handlers\nframe.add_input(\"Enter your choice: \", get_input,200)\t\n# Starting the Frame\nframe.start()\t\n\"\"\"\t\n# Test cases section\n# test your code - THESE CALLS MUST BE PRESENT IN YOUR SUBMITTED CODE\nrpsls(\"rock\")\nrpsls(\"Spock\")",
         "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "documentation": {}
     },
