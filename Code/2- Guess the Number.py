@@ -37,21 +37,21 @@ def new_game():
 #------------------------------------------
 # define event handlers for control panel
 
-def set_range(new_range):
+def set_range(new_range: int) -> None:
     """Set the number range and start a new game."""
     global num_range
     num_range = new_range
     new_game()
 
-def range100():
+def range100() -> None:
     """Button that changes the range to [0,100) and starts a new game."""
     set_range(100)
 
-def range1000():
+def range1000() -> None:
     """Button that changes the range to [0,1000) and starts a new game."""
     set_range(1000)
 
-def reset():
+def reset() -> None:
     """Reset the current game."""
     new_game()
 

@@ -89,7 +89,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def set_range(new_range):\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global num_range\n    num_range = new_range\n    new_game()\ndef range100():\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000():\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"",
+        "peekOfCode": "def set_range(new_range: int) -> None:\n    \"\"\"Set the number range and start a new game.\"\"\"\n    global num_range\n    num_range = new_range\n    new_game()\ndef range100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -98,7 +98,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def range100():\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000():\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset():\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:",
+        "peekOfCode": "def range100() -> None:\n    \"\"\"Button that changes the range to [0,100) and starts a new game.\"\"\"\n    set_range(100)\ndef range1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -107,7 +107,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def range1000():\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset():\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:",
+        "peekOfCode": "def range1000() -> None:\n    \"\"\"Button that changes the range to [0,1000) and starts a new game.\"\"\"\n    set_range(1000)\ndef reset() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
@@ -116,7 +116,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def reset():\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:\n        guess_int = int(guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")",
+        "peekOfCode": "def reset() -> None:\n    \"\"\"Reset the current game.\"\"\"\n    new_game()\ndef input_guess(guess: str) -> None:\n    \"\"\"Handle user input: compare guess to secret_number and give feedback.\"\"\"\n    global remaining_guesses\n    try:\n        guess_int = int(guess)\n    except ValueError:\n        print(\"Invalid input! Please enter an integer.\")",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
