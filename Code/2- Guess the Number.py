@@ -55,32 +55,32 @@ def reset():
     """Reset the current game."""
     new_game()
 
-def input_guess(guess):
+def input_guess(guess: str) -> None:
     """Handle user input: compare guess to secret_number and give feedback."""
     global remaining_guesses
 
     try:
-        guess = int(guess)
+        guess_int = int(guess)
     except ValueError:
         print("Invalid input! Please enter an integer.")
         return
 
-    print(f"Guess was {guess}")
+    print(f"Guess was {guess_int}")
 
-    if guess < secret_number:
+    if guess_int < secret_number:
         print("Higher!")
-    elif guess > secret_number:
+    elif guess_int > secret_number:
         print("Lower!")
     else:
-        print("Correct!")
+        print("Correct! You win!")
         new_game()
         return
 
     remaining_guesses -= 1
-    print(f"\nNumber of remaining guesses is: {remaining_guesses}")
+    print(f"Remaining guesses: {remaining_guesses}")
 
-    if remaining_guesses == 0:
-        print(f"You ran out of guesses :(  The secret number was {secret_number}")
+    if remaining_guesses <= 0:
+        print(f"You ran out of guesses. The secret number was {secret_number}.")
         new_game()
 
 #------------------------------------------
