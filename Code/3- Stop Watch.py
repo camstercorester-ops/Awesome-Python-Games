@@ -21,25 +21,14 @@ timer_is_paused = True
 # define helper function format_time that converts time
 # in tenths of seconds into formatted string A:BC.D
 def format_time(tenths):
-    
     # one tenth of a second
     tenths_digit = tenths % 10
-    
     # total seconds
     total_seconds = tenths // 10
+    minutes, remaining_seconds = divmod(total_seconds, 60)
+    seconds_tens, seconds_ones = divmod(remaining_seconds, 10)
+    return f"{minutes}:{seconds_tens}{seconds_ones}.{tenths_digit}"
 
-    minutes = total_seconds // 60
-    
-    remaining_seconds = total_seconds % 60
-    
-    seconds_ones = remaining_seconds % 10
-    seconds_tens = remaining_seconds // 10
-    
-    
-    formatted_time = str(minutes) + ":" + str(seconds_tens) + str(seconds_ones) + "." + str(tenths_digit)
-    
-    return formatted_time
-    
 #-------------------------------------------------    
 #-------------------------------------------------
 
@@ -53,26 +42,19 @@ def start_timer():
 
     
 def stop_timer():
-    global timer_is_paused
+    global timer_is_paused, total_attempts, successful_attempts
     
     if not timer_is_paused:
         stopwatch_timer.stop()
-
-        global total_attempts, successful_attempts
-
         if elapsed_tenths % 10 == 0:
             successful_attempts += 1
-
         total_attempts += 1
-        
         timer_is_paused = True
     
 
 def reset_timer():
     global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused
-    elapsed_tenths = 0
-    successful_attempts = 0
-    total_attempts = 0
+    elapsed_tenths = successful_attempts = total_attempts = 0
     timer_is_paused = True
     stopwatch_timer.stop()
     refresh_display()
@@ -87,10 +69,8 @@ def increment_elapsed():
 
 # define draw handler
 def refresh_display():
-    time_text = format_time(elapsed_tenths)
-    score_text = f"{successful_attempts}/{total_attempts}"
-    canvas.itemconfig(time_display, text=time_text)
-    canvas.itemconfig(score_display, text=score_text)
+    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))
+    canvas.itemconfig(score_display, text=f"{successful_attempts}/{total_attempts}")
 
 
 #-------------------------------------------------    

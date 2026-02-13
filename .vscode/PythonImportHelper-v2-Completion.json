@@ -376,7 +376,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def format_time(tenths):\n    # one tenth of a second\n    tenths_digit = tenths % 10\n    # total seconds\n    total_seconds = tenths // 10\n    minutes = total_seconds // 60\n    remaining_seconds = total_seconds % 60\n    seconds_ones = remaining_seconds % 10\n    seconds_tens = remaining_seconds // 10\n    formatted_time = str(minutes) + \":\" + str(seconds_tens) + str(seconds_ones) + \".\" + str(tenths_digit)",
+        "peekOfCode": "def format_time(tenths):\n    # one tenth of a second\n    tenths_digit = tenths % 10\n    # total seconds\n    total_seconds = tenths // 10\n    minutes, remaining_seconds = divmod(total_seconds, 60)\n    seconds_tens, seconds_ones = divmod(remaining_seconds, 10)\n    return f\"{minutes}:{seconds_tens}{seconds_ones}.{tenths_digit}\"\n#-------------------------------------------------    \n#-------------------------------------------------",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -385,7 +385,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def start_timer():\n    global timer_is_paused\n    stopwatch_timer.start()\n    timer_is_paused = False\ndef stop_timer():\n    global timer_is_paused\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        global total_attempts, successful_attempts\n        if elapsed_tenths % 10 == 0:",
+        "peekOfCode": "def start_timer():\n    global timer_is_paused\n    stopwatch_timer.start()\n    timer_is_paused = False\ndef stop_timer():\n    global timer_is_paused, total_attempts, successful_attempts\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        if elapsed_tenths % 10 == 0:\n            successful_attempts += 1",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -394,7 +394,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def stop_timer():\n    global timer_is_paused\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        global total_attempts, successful_attempts\n        if elapsed_tenths % 10 == 0:\n            successful_attempts += 1\n        total_attempts += 1\n        timer_is_paused = True\ndef reset_timer():",
+        "peekOfCode": "def stop_timer():\n    global timer_is_paused, total_attempts, successful_attempts\n    if not timer_is_paused:\n        stopwatch_timer.stop()\n        if elapsed_tenths % 10 == 0:\n            successful_attempts += 1\n        total_attempts += 1\n        timer_is_paused = True\ndef reset_timer():\n    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -403,7 +403,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def reset_timer():\n    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused\n    elapsed_tenths = 0\n    successful_attempts = 0\n    total_attempts = 0\n    timer_is_paused = True\n    stopwatch_timer.stop()\n    refresh_display()\n# define event handler for timer with 0.1 sec interval\ndef increment_elapsed():",
+        "peekOfCode": "def reset_timer():\n    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused\n    elapsed_tenths = successful_attempts = total_attempts = 0\n    timer_is_paused = True\n    stopwatch_timer.stop()\n    refresh_display()\n# define event handler for timer with 0.1 sec interval\ndef increment_elapsed():\n    global elapsed_tenths\n    elapsed_tenths += 1",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -412,7 +412,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def increment_elapsed():\n    global elapsed_tenths\n    elapsed_tenths += 1\n    refresh_display()\n# define draw handler\ndef refresh_display():\n    time_text = format_time(elapsed_tenths)\n    score_text = f\"{successful_attempts}/{total_attempts}\"\n    canvas.itemconfig(time_display, text=time_text)\n    canvas.itemconfig(score_display, text=score_text)",
+        "peekOfCode": "def increment_elapsed():\n    global elapsed_tenths\n    elapsed_tenths += 1\n    refresh_display()\n# define draw handler\ndef refresh_display():\n    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))\n    canvas.itemconfig(score_display, text=f\"{successful_attempts}/{total_attempts}\")\n#-------------------------------------------------    \n#-------------------------------------------------",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -421,7 +421,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def refresh_display():\n    time_text = format_time(elapsed_tenths)\n    score_text = f\"{successful_attempts}/{total_attempts}\"\n    canvas.itemconfig(time_display, text=time_text)\n    canvas.itemconfig(score_display, text=score_text)\n#-------------------------------------------------    \n#-------------------------------------------------\n# create frame\nroot = tk.Tk()\nroot.title(\"Stop Watch: The Game\")",
+        "peekOfCode": "def refresh_display():\n    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))\n    canvas.itemconfig(score_display, text=f\"{successful_attempts}/{total_attempts}\")\n#-------------------------------------------------    \n#-------------------------------------------------\n# create frame\nroot = tk.Tk()\nroot.title(\"Stop Watch: The Game\")\nroot.resizable(False, False)\ncanvas = tk.Canvas(root, width=300, height=200, bg=\"white\")",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
