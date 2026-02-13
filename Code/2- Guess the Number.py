@@ -103,7 +103,8 @@ for label, handler, width in controls:
 frame.add_input("Enter a guess", input_guess, 200)
 
 #------------------------------------------
-# call new_game 
+
+# Initialize and start the first game
 new_game()
 
 #------------------------------------------

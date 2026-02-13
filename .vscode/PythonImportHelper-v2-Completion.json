@@ -170,7 +170,7 @@
         "kind": 5,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "controls = [\n    (\"Range is [0, 100)\", range100, 200),\n    (\"Range is [0, 1000)\", range1000, 200),\n    (\"New Game\", reset, 200)\n]\nfor label, handler, width in controls:\n    frame.add_button(label, handler, width)\nframe.add_input(\"Enter a guess\", input_guess, 200)\n#------------------------------------------\n# call new_game ",
+        "peekOfCode": "controls = [\n    (\"Range is [0, 100)\", range100, 200),\n    (\"Range is [0, 1000)\", range1000, 200),\n    (\"New Game\", reset, 200)\n]\nfor label, handler, width in controls:\n    frame.add_button(label, handler, width)\nframe.add_input(\"Enter a guess\", input_guess, 200)\n#------------------------------------------\n# Initialize and start the first game",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },
