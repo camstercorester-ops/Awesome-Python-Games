@@ -171,6 +171,23 @@ def rpsls(player_choice):
 # Event Handlers
 
 def get_input(inp):
+    """
+    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.
+
+    This function validates the input string against the valid options 
+    (rock, paper, lizard, Spock, scissors) and either calls the game function 
+    with valid input or prints an error message for invalid input.
+
+    Args:
+        inp (str): The user's input string representing their choice.
+
+    Returns:
+        None: The function either calls rpsls() or prints an error message.
+    
+    Side Effects:
+        - Calls rpsls() function if input is valid
+        - Prints error message if input is invalid
+    """
 	
 	if (inp == "rock" or inp == "paper" or inp == "lizard" or 
 			inp == "Spock" or inp == "scissors"):		

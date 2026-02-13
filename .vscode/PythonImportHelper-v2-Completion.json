@@ -58,7 +58,7 @@
         "kind": 2,
         "importPath": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "description": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
-        "peekOfCode": "def get_input(inp):\n\tif (inp == \"rock\" or inp == \"paper\" or inp == \"lizard\" or \n\t\t\tinp == \"Spock\" or inp == \"scissors\"):\t\t\n\t\trpsls(inp)\n\telse:\n\t\tprint \"Error: Invalid Input\"\n# Creating a Frame\nframe = simplegui.create_frame(\"Rock-paper-scissors-lizard-Spock\",200,200)\n# Registering Handlers\nframe.add_input(\"Enter your choice: \", get_input,200)\t",
+        "peekOfCode": "def get_input(inp):\n    \"\"\"\n    Process the user input for the Rock-Paper-Scissors-Lizard-Spock game.\n    This function validates the input string against the valid options \n    (rock, paper, lizard, Spock, scissors) and either calls the game function \n    with valid input or prints an error message for invalid input.\n    Args:\n        inp (str): The user's input string representing their choice.\n    Returns:\n        None: The function either calls rpsls() or prints an error message.",
         "detail": "Code.1- Rock.Paper.Scissors.Spock.Lizard",
         "documentation": {}
     },
