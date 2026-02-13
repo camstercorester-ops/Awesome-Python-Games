@@ -291,5 +291,9 @@ def create_gui() -> tk.Tk:
 # This conditional ensures the GUI only launches when the script is run directly,
 # not when imported as a module in other Python code
 if __name__ == "__main__":
-    window = create_gui()
-    window.mainloop()
+    try:
+        window = create_gui()
+        window.mainloop()
+    except KeyboardInterrupt:
+        # Graceful shutdown on Ctrl-C in terminal
+        pass
