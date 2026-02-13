@@ -518,7 +518,7 @@
         "kind": 2,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "def timer_start() -> None:\n    \"\"\"Start the after() loop that increments elapsed time every 100 ms.\"\"\"\n    global _timer_id\n    if _timer_id is not None:\n        return\n    _timer_id = root.after(100, timer_tick)\ndef timer_tick() -> None:\n    \"\"\"Callback that increments time and schedules the next tick.\"\"\"\n    increment_elapsed()\n    global _timer_id",
+        "peekOfCode": "def timer_start(_) -> None:\n    \"\"\"Start the after() loop that increments elapsed time every 100 ms.\"\"\"\n    global _timer_id\n    if _timer_id is not None:\n        return\n    _timer_id = root.after(100, timer_tick)\ndef timer_tick() -> None:\n    \"\"\"Callback that increments time and schedules the next tick.\"\"\"\n    increment_elapsed()\n    global _timer_id",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },
@@ -653,7 +653,7 @@
         "kind": 5,
         "importPath": "Code.3- Stop Watch",
         "description": "Code.3- Stop Watch",
-        "peekOfCode": "_timer_id = None  # Holds the after() ID to allow cancellation\ndef timer_start() -> None:\n    \"\"\"Start the after() loop that increments elapsed time every 100 ms.\"\"\"\n    global _timer_id\n    if _timer_id is not None:\n        return\n    _timer_id = root.after(100, timer_tick)\ndef timer_tick() -> None:\n    \"\"\"Callback that increments time and schedules the next tick.\"\"\"\n    increment_elapsed()",
+        "peekOfCode": "_timer_id = None  # Holds the after() ID to allow cancellation\ndef timer_start(_) -> None:\n    \"\"\"Start the after() loop that increments elapsed time every 100 ms.\"\"\"\n    global _timer_id\n    if _timer_id is not None:\n        return\n    _timer_id = root.after(100, timer_tick)\ndef timer_tick() -> None:\n    \"\"\"Callback that increments time and schedules the next tick.\"\"\"\n    increment_elapsed()",
         "detail": "Code.3- Stop Watch",
         "documentation": {}
     },

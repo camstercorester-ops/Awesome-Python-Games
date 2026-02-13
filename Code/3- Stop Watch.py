@@ -222,7 +222,7 @@ accuracy_display = canvas.create_text(
 _timer_id = None  # Holds the after() ID to allow cancellation
 
 
-def timer_start() -> None:
+def timer_start(_) -> None:
     """Start the after() loop that increments elapsed time every 100 ms."""
     global _timer_id
     if _timer_id is not None:
