@@ -13,7 +13,6 @@ from typing import Final, Tuple
 # Domain model
 # ------------------------------------------------------------------
 
-
 @unique
 class Move(IntEnum):
     """Strongly-typed moves with built-in conversion."""
