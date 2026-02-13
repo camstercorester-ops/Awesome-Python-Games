@@ -12,12 +12,15 @@
 
 import tkinter as tk
 from typing import Tuple
+import threading
+import time
 
 # Global game-state variables
-elapsed_tenths = 0        # time elapsed in tenths of seconds
-total_attempts = 0        # how many times the user pressed Stop
-successful_attempts = 0   # how many stops landed on a whole second
-timer_is_paused = True    # flag indicating if the timer is currently paused
+_elapsed_tenths = 0        # time elapsed in tenths of seconds
+_total_attempts = 0        # how many times the user pressed Stop
+_successful_attempts = 0   # how many stops landed on a whole second
+_timer_is_paused = True    # flag indicating if the timer is currently paused
+_state_lock = threading.Lock()  # Lock to protect concurrent access
 
 # =============================================================================
 #  2. Helper Functions
@@ -46,24 +49,28 @@ def format_time(tenths: int) -> str:
 
 def get_score_text() -> str:
     """Return the current score string."""
-    return f"{successful_attempts}/{total_attempts}"
+    with _state_lock:
+        return f"{_successful_attempts}/{_total_attempts}"
 
 
 def is_on_whole_second() -> bool:
     """Check if the current elapsed time is on a whole second."""
-    return elapsed_tenths % 10 == 0
+    with _state_lock:
+        return _elapsed_tenths % 10 == 0
 
 
 def reset_game_state() -> None:
     """Reset all game-state variables to initial values."""
-    global elapsed_tenths, successful_attempts, total_attempts, timer_is_paused
-    elapsed_tenths = successful_attempts = total_attempts = 0
-    timer_is_paused = True
+    global _elapsed_tenths, _successful_attempts, _total_attempts, _timer_is_paused
+    with _state_lock:
+        _elapsed_tenths = _successful_attempts = _total_attempts = 0
+        _timer_is_paused = True
 
 
 def get_accuracy_percentage() -> float:
     """Return the accuracy as a percentage (0-100)."""
-    return (successful_attempts / total_attempts * 100) if total_attempts else 0.0
+    with _state_lock:
+        return (_successful_attempts / _total_attempts * 100) if _total_attempts else 0.0
 
 
 def get_accuracy_color(percentage: float) -> str:
@@ -81,9 +88,12 @@ def get_accuracy_color(percentage: float) -> str:
 
 def start_timer() -> None:
     """Start the stopwatch timer and set the paused flag to False."""
-    global timer_is_paused
+    global _timer_is_paused
+    with _state_lock:
+        if not _timer_is_paused:
+            return  # Prevent double-start
+        _timer_is_paused = False
     stopwatch_timer.start()
-    timer_is_paused = False
 
 
 def stop_timer() -> None:
@@ -92,16 +102,17 @@ def stop_timer() -> None:
     Increment total attempts and, if stopped on a whole second,
     increment successful attempts.
     """
-    global timer_is_paused, total_attempts, successful_attempts
-
-    if not timer_is_paused:
-        stopwatch_timer.stop()
+    global _timer_is_paused, _total_attempts, _successful_attempts
+    with _state_lock:
+        if _timer_is_paused:
+            return  # Prevent stop when already paused
+        _timer_is_paused = True
         if is_on_whole_second():
-            successful_attempts += 1
-        total_attempts += 1
-        timer_is_paused = True
-        refresh_display()
-        show_accuracy_popup()
+            _successful_attempts += 1
+        _total_attempts += 1
+    stopwatch_timer.stop()
+    refresh_display()
+    show_accuracy_popup()
 
 
 def reset_timer() -> None:
@@ -117,17 +128,23 @@ def reset_timer() -> None:
 
 def increment_elapsed() -> None:
     """Increment elapsed time by one tenth of a second and refresh display."""
-    global elapsed_tenths
-    elapsed_tenths += 1
+    global _elapsed_tenths
+    with _state_lock:
+        _elapsed_tenths += 1
     refresh_display()
 
 
 def refresh_display() -> None:
     """Update the canvas text items for time and score."""
-    canvas.itemconfig(time_display, text=format_time(elapsed_tenths))
-    canvas.itemconfig(score_display, text=get_score_text())
-    canvas.itemconfig(accuracy_display, text=f"{get_accuracy_percentage():.1f}%")
-    canvas.itemconfig(accuracy_display, fill=get_accuracy_color(get_accuracy_percentage()))
+    with _state_lock:
+        time_text = format_time(_elapsed_tenths)
+        score_text = get_score_text()
+        acc = get_accuracy_percentage()
+        color = get_accuracy_color(acc)
+        acc_text = f"{acc:.1f}%"
+    canvas.itemconfig(time_display, text=time_text)
+    canvas.itemconfig(score_display, text=score_text)
+    canvas.itemconfig(accuracy_display, text=acc_text, fill=color)
 
 
 def show_accuracy_popup() -> None:
@@ -136,7 +153,10 @@ def show_accuracy_popup() -> None:
     color = get_accuracy_color(acc)
     popup = tk.Toplevel(root)
     popup.overrideredirect(True)
-    popup.geometry(f"+{root.winfo_x() + 350}+{root.winfo_y() + 100}")
+    # Clamp position to stay within screen bounds
+    x = max(0, min(root.winfo_x() + 350, root.winfo_screenwidth() - 100))
+    y = max(0, min(root.winfo_y() + 100, root.winfo_screenheight() - 100))
+    popup.geometry(f"+{x}+{y}")
     label = tk.Label(popup, text=f"{acc:.1f}%", fg=color, font=("Helvetica", 24))
     label.pack(padx=20, pady=10)
     root.after(1000, popup.destroy)
@@ -150,12 +170,16 @@ root = tk.Tk()
 root.title("Stop Watch: The Game")
 root.resizable(False, False)
 
+# Set window on top and remove full-screen to reduce attack surface
+root.attributes("-topmost", True)
+root.protocol("WM_DELETE_WINDOW", root.quit)
+
 canvas = tk.Canvas(root, width=300, height=200, bg="white")
 canvas.pack()
 
 time_display = canvas.create_text(
     75, 100,
-    text=format_time(elapsed_tenths),
+    text=format_time(0),
     fill="Green",
     font=("Helvetica", 40),
     anchor="w"
@@ -181,23 +205,24 @@ accuracy_display = canvas.create_text(
 #  6. Timer Implementation using tkinter's after() loop
 # =============================================================================
 
-timer_id = None  # Holds the after() ID to allow cancellation
+_timer_id = None  # Holds the after() ID to allow cancellation
 
 
 def timer_start() -> None:
     """Start the after() loop that increments elapsed time every 100 ms."""
-    global timer_id
-    if timer_id is None:
-        increment_elapsed()
-        timer_id = root.after(100, timer_start)
+    global _timer_id
+    if _timer_id is not None:
+        return
+    increment_elapsed()
+    _timer_id = root.after(100, timer_start)
 
 
 def timer_stop() -> None:
     """Cancel the after() loop, effectively pausing the timer."""
-    global timer_id
-    if timer_id is not None:
-        root.after_cancel(timer_id)
-        timer_id = None
+    global _timer_id
+    if _timer_id is not None:
+        root.after_cancel(_timer_id)
+        _timer_id = None
 
 
 # Create a simple object with start/stop methods for consistent interface
@@ -210,24 +235,26 @@ stopwatch_timer = type('Timer', (), {'start': timer_start, 'stop': timer_stop})(
 button_frame = tk.Frame(root)
 button_frame.pack()
 
-start_button = tk.Button(button_frame, text="Start", command=start_timer, width=10)
+start_button = tk.Button(button_frame, text="Start", command=start_timer, width=10, takefocus=True)
 start_button.pack(side="left", padx=5, pady=5)
 
-stop_button = tk.Button(button_frame, text="Stop", command=stop_timer, width=10)
+stop_button = tk.Button(button_frame, text="Stop", command=stop_timer, width=10, takefocus=True)
 stop_button.pack(side="left", padx=5, pady=5)
 
-reset_button = tk.Button(button_frame, text="Reset", command=reset_timer, width=10)
+reset_button = tk.Button(button_frame, text="Reset", command=reset_timer, width=10, takefocus=True)
 reset_button.pack(side="left", padx=5, pady=5)
 
 # =============================================================================
 #  8. Keyboard shortcuts
 # =============================================================================
 
-root.bind("<space>", lambda e: start_timer() if timer_is_paused else stop_timer())
-root.bind("<r>", lambda e: reset_timer())
+# Use root.bind_all to ensure no widget overrides these bindings
+root.bind_all("<space>", lambda e: start_timer() if _timer_is_paused else stop_timer())
+root.bind_all("<r>", lambda e: reset_timer())
 
 # =============================================================================
 #  9. Run Application
 # =============================================================================
 
-root.mainloop()
+if __name__ == "__main__":
+    root.mainloop()
