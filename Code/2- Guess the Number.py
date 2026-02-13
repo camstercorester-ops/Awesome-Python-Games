@@ -91,12 +91,16 @@ frame = simplegui.create_frame("Guess the Number Game", 300, 250)
 #------------------------------------------
 
 # register event handlers for control elements and start frame
+controls = [
+    ("Range is [0, 100)", range100, 200),
+    ("Range is [0, 1000)", range1000, 200),
+    ("New Game", reset, 200)
+]
 
-frame.add_button("Range is [0, 100)", range100, 200)
-frame.add_button("Range is [0, 1000)", range1000, 200)
+for label, handler, width in controls:
+    frame.add_button(label, handler, width)
+
 frame.add_input("Enter a guess", input_guess, 200)
-
-frame.add_button("New Game", reset, 200)
 
 #------------------------------------------
 # call new_game 
