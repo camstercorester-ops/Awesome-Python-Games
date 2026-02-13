@@ -80,7 +80,7 @@
         "kind": 2,
         "importPath": "Code.2- Guess the Number",
         "description": "Code.2- Guess the Number",
-        "peekOfCode": "def start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts\n    secret_number = random.randrange(upper_bound)\n    remaining_attempts = (upper_bound - 1).bit_length()\n    print(\"\\n\".join([",
+        "peekOfCode": "def start_new_game() -> None:\n    \"\"\"\n    Start a new game: pick a secret number in [0, upper_bound) and\n    set remaining_attempts to the optimal number of attempts\n    (ceiling of log2(upper_bound)).\n    \"\"\"\n    global secret_number, remaining_attempts\n    secret_number = random.randrange(upper_bound)\n    # ceil(log2(upper_bound)) via bit_length is already optimal\n    remaining_attempts = (upper_bound - 1).bit_length()",
         "detail": "Code.2- Guess the Number",
         "documentation": {}
     },

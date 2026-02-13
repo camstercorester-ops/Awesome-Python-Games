@@ -24,14 +24,13 @@ def start_new_game() -> None:
     global secret_number, remaining_attempts
     
     secret_number = random.randrange(upper_bound)
+    # ceil(log2(upper_bound)) via bit_length is already optimal
     remaining_attempts = (upper_bound - 1).bit_length()
     
-    print("\n".join([
-        "-" * 40,
-        "-" * 40,
-        f"New game. Range is from 0 to {upper_bound}",
-        f"Total Guesses: {remaining_attempts}"
-    ]))
+    # Use a single print call with a pre-formed string for speed
+    print("-" * 40 + "\n" + "-" * 40 +
+          f"\nNew game. Range is from 0 to {upper_bound}"
+          f"\nTotal Guesses: {remaining_attempts}")
 #------------------------------------------
 # define event handlers for control panel
 
