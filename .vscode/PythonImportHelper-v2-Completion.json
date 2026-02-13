@@ -1564,7 +1564,7 @@
         "kind": 6,
         "importPath": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "description": "Code.Rock_Paper_Scissors_Spock_Lizard",
-        "peekOfCode": "class RPSLSGui:\n    \"\"\"Lightweight GUI with inline styling.\"\"\"\n    def __init__(self) -> None:\n        try:\n            self.root = tk.Tk()\n            self.root.title(\"Rock-Paper-Scissors-Lizard-Spock\")\n            self.root.geometry(\"320x160\")\n            self.root.resizable(False, False)\n            self.root.eval(\"tk::PlaceWindow . center\")\n            tk.Label(self.root, text=\"Enter your move:\").pack(pady=(10, 0))",
+        "peekOfCode": "class RPSLSGui:\n    \"\"\"Enhanced GUI with scoreboard, history, quick buttons, and status bar.\"\"\"\n    def __init__(self) -> None:\n        try:\n            self.root = tk.Tk()\n            self.root.title(\"Rock-Paper-Scissors-Lizard-Spock\")\n            self.root.geometry(\"420x420\")\n            self.root.resizable(False, False)\n            self.root.eval(\"tk::PlaceWindow . center\")\n            # Persistent stats",
         "detail": "Code.Rock_Paper_Scissors_Spock_Lizard",
         "documentation": {}
     },
