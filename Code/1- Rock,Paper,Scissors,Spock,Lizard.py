@@ -200,12 +200,11 @@ def get_input(inp):
         - Calls rpsls() function if input is valid
         - Prints error message if input is invalid
     """
-	
-	if (inp == "rock" or inp == "paper" or inp == "lizard" or 
-			inp == "Spock" or inp == "scissors"):		
-		rpsls(inp)
-	else:
-		print "Error: Invalid Input"
+    
+    if (inp == "rock" or inp == "paper" or inp == "lizard" or inp == "Spock" or inp == "scissors"):
+        rpsls(inp)
+    else:
+        print("Error: Invalid Input")
 	
 # Creating a Frame
 frame = simplegui.create_frame("Rock-paper-scissors-lizard-Spock",200,200)
