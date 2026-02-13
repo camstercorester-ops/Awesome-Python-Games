@@ -47,7 +47,11 @@ def name_to_number(name):
         >>> name_to_number("Spock")
         1
     """
-
+    
+    if not isinstance(name, str):
+        print("Error: Input must be a string")
+        return None
+        
     if name == "rock":
         return 0
     elif name == "Spock":
@@ -59,7 +63,9 @@ def name_to_number(name):
     elif name == "scissors":
         return 4
     else:
-        print "Error: Not a valid name" 
+        print("Error: Not a valid name")
+        return None
+ 
 
 #----------------------------------------------------------
 # Number to name conversion function
